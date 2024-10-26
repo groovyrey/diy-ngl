@@ -28,7 +28,9 @@ class Home extends React.Component {
 		this.setState({'private':event.target.checked})
 	}
 	buttonClick = (event) => {
-		const check = Data.addDocument("maindata",{
+		
+		if (this.state.message!=""){
+			const check = Data.addDocument("maindata",{
 			'sender': this.state.sender,
 			'message': this.state.message,
 			'date': this.state.date,
@@ -40,6 +42,11 @@ class Home extends React.Component {
 		} else {
 			alert("couldn't send message")
 		}
+		} else {
+			alert("Message box must not be empty")
+		}
+		
+		
 	}
 	 
  render (){
