@@ -56,9 +56,10 @@ class Home extends React.Component {
    <div className="card">
    <h3 className="card-header">Send message</h3>
    <div className="card-body">
+   <small>Leave the sender's input blank to send message anonymously</small>
    <div className="input-group p-1">
   <span className="input-group-text" id="addon-wrapping"><span className="bi-person-fill"></span></span>
- 	<input onChange={this.senderChange} type="text" className="form-control" placeholder="Sender's name(Leave blank to send anonymously)" aria-label="Username" aria-describedby="addon-wrapping"/>
+ 	<input onChange={this.senderChange} type="text" className="form-control" placeholder="Sender" aria-label="Username" aria-describedby="addon-wrapping"/>
   </div>
   <div className="input-group p-1">
   <span className="input-group-text"><span className="bi-chat-left-dots-fill"></span></span>
