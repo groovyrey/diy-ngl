@@ -3,13 +3,17 @@ import ReactDOM from 'react-dom';
 import * as Data from './data/data_manager'
 import HomePage from './pages/home'
 import MessagesPage from './pages/messages'
+import AdminPage from './pages/admin'
+import DashBoard from './pages/dashboard'
 
 const app = document.getElementById('app')
 
 
 const routes = {
 	'home': HomePage(),
-	'messages': MessagesPage()
+	'messages': MessagesPage(),
+	'admin': AdminPage(),
+	'dashboard': DashBoard()
 }
 
 navigate()
