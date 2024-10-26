@@ -54,7 +54,7 @@ class Home extends React.Component {
   return (
    <div className="container p-1">
    <div className="card">
-   <h3 className="card-header">Send message</h3>
+   <h3 className="card-header">Message me</h3>
    <div className="card-body">
    <small>Leave the sender's input blank to send message anonymously</small>
    <div className="input-group p-1">
