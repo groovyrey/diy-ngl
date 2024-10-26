@@ -35,7 +35,7 @@ class Home extends React.Component {
 			'date': this.state.date,
 			'private': this.state.private
 		})
-		const text = `New message from [${this.state.sender!=""?this.state.sender:'Anonymous'}]`
+		const text = `New message from ${this.state.sender!=""?this.state.sender:'Anonymous'}, private=${this.state.private}`
 		if (check){
 			alert('Succesfuly sent your message')
 			sendMessage(text)
