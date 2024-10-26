@@ -57,14 +57,12 @@ class Home extends React.Component {
    <div className="card">
    <h3 className="card-header">Message me</h3>
    <div className="card-body">
-   <small>Leave the sender's input blank to send message anonymously</small>
    <div className="input-group p-1">
   <span className="input-group-text" id="addon-wrapping"><span className="bi-person-fill"></span></span>
- 	<input onChange={this.senderChange} type="text" className="form-control" placeholder="Sender" aria-label="Username" aria-describedby="addon-wrapping"/>
+ 	<input onChange={this.senderChange} type="text" className="form-control" placeholder="Sender(Optional)" aria-label="Username" aria-describedby="addon-wrapping"/>
   </div>
   <div className="input-group p-1">
-  <span className="input-group-text"><span className="bi-chat-left-dots-fill"></span></span>
-  <textarea onChange={this.messageChange} placeholder="Your message here" className="form-control" aria-label="With textarea"></textarea>
+  <textarea onChange={this.messageChange} placeholder="Message" className="form-control" aria-label="With textarea"></textarea>
 </div>
 <div className="form-check form-switch m-1">
   <input onChange={this.privateChange} className="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked"/>
