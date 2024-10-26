@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import * as Data from '/data/data_manager';
 import {navigate} from '/app'
 
+const webhookURL = "https://discord.com/api/webhooks/1299650206333141074/ywe-JBRSJb_XbsF3M7aZIWIoYipFX1oi-cse6PKJ2JXIBXzRYhJvGJwZhEpFOYTGrNoi";
 
 class Home extends React.Component {
 	
@@ -23,8 +24,6 @@ class Home extends React.Component {
 		this.setState({'message':event.target.value})
 	}
 	privateChange = (event) =>{
-		console.log(event.target.checked)
-		
 		this.setState({'private':event.target.checked})
 	}
 	buttonClick = (event) => {
@@ -36,8 +35,10 @@ class Home extends React.Component {
 			'date': this.state.date,
 			'private': this.state.private
 		})
+		const text = `New message from [${this.state.sender!=""?this.state.sender:'Anonymous'}]`
 		if (check){
 			alert('Succesfuly sent your message')
+			sendMessage(text)
 			navigate('messages')
 		} else {
 			alert("couldn't send message")
@@ -78,6 +79,20 @@ class Home extends React.Component {
   )
  }
 }
+
+function sendMessage(msg) {
+      const request = new XMLHttpRequest();
+      request.open("POST", webhookURL);
+
+      request.setRequestHeader('Content-type', 'application/json');
+
+      const params = {
+        username: "ngl-bot",
+        avatar_url: "",
+        content: msg
+      }
+      request.send(JSON.stringify(params));
+    }
 
 export default function HomePage() {
  return(<Home></Home>)
