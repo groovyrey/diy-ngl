@@ -44,7 +44,7 @@ class Home extends React.Component {
 			alert("couldn't send message")
 		}
 		} else {
-			alert("Message box must not be empty")
+			alert("You must provide a message")
 		}
 		
 		
