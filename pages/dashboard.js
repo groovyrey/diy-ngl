@@ -14,7 +14,7 @@ class DashB extends React.Component {
     componentDidMount() {
         // Call async function and update state
         Data.readCollection("maindata").then((data) => {
-            this.setState({ messages: data });
+            this.setState({ messages: data.filter(msg=>msg.data.private==true) });
         }).catch((error) => {
             console.error("Error fetching data:", error);
         });

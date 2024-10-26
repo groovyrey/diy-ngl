@@ -15,7 +15,8 @@ class Messages extends React.Component {
     componentDidMount() {
         // Call async function and update state
         Data.readCollection("maindata").then((data) => {
-            this.setState({ messages: data });
+        	console.log(data)
+            this.setState({ messages: data.filter(msg=>msg.data.private==false) });
         }).catch((error) => {
             console.error("Error fetching data:", error);
         });
@@ -29,7 +30,7 @@ class Messages extends React.Component {
                <p className="">{this.props.text}</p>
                 </div>
            {this.state.messages.map((item) => (
-            <div hidden={item.data.private} key={item.id} className="card m-1">
+            <div key={item.id} className="card m-1">
                 <h5 className="card-header"><span className={`bi-${item.data.sender!=""?"person-fill":"question-lg"}`}/> {item.data.sender!=""?item.data.sender:'Anonymous'}</h5>
                    <div className="card-body">
                             <p>{item.data.message}</p>
