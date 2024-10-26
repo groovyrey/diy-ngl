@@ -44,6 +44,6 @@ class Messages extends React.Component {
 
 export default function MessagesPage() {
     return (
-        <Messages title="Messages " text="Messages section, Only public messages will appear here" />
+        <Messages title="Messages " text="Messages section, only public messages will appear here" />
     );
 }
