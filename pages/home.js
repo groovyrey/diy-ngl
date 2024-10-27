@@ -64,7 +64,7 @@ class Home extends React.Component {
   return (
    <div className="container p-1">
    <div className="card">
-   <h3 className="card-header">Message me</h3>
+   <h3 className="card-header text-bg-primary">Message me</h3>
    <div className="card-body">
    <div className="input-group p-1">
   <span className="input-group-text" id="addon-wrapping"><span className="bi-person-fill"></span></span>

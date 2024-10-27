@@ -32,14 +32,14 @@ class Pass extends React.Component{
 		return (
 			<div className="container p-1">
 			<div className="card">
-			<h5 className="card-header">Admin Panel</h5>
+			<h5 className="text-bg-primary card-header">Admin Panel</h5>
 			<div className="card-body">
 			<div className="form-floating">
   <input onChange={this.inputChange} type="password" className="form-control" id="floatingPassword" placeholder="Password"/>
   <label>Password</label>
 </div>
 			</div>
-			<button onClick={this.buttonClicked} type="button" className="btn btn-primary m-1">Submit</button>
+			<button onClick={this.buttonClicked} type="button" className="btn btn-primary m-3">Submit</button>
 			</div>
 			</div>
 		)

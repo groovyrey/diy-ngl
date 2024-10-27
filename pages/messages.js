@@ -32,7 +32,7 @@ class Messages extends React.Component {
                 </div>
            {this.state.messages.map((item) => (
             <div key={item.id} className="card m-1">
-                <h5 className="card-header"><span className={`bi-${item.data.sender!=""?"person-fill":"question-lg"}`}/> {item.data.sender!=""?item.data.sender:'Anonymous'}</h5>
+                <h5 className="text-bg-primary card-header"><span className={`bi-${item.data.sender!=""?"person-fill":"question-lg"}`}/> {item.data.sender!=""?item.data.sender:'Anonymous'}</h5>
                    <div className="card-body">
                             <p>{item.data.message}</p>
                         </div>
