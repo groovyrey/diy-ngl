@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import * as Data from '/data/data_manager';
-import {navigate} from '/app'
+import {navigate, showNotif} from '/app'
 
 const webhookURL = "https://discord.com/api/webhooks/1299650206333141074/ywe-JBRSJb_XbsF3M7aZIWIoYipFX1oi-cse6PKJ2JXIBXzRYhJvGJwZhEpFOYTGrNoi";
 
@@ -37,14 +37,15 @@ class Home extends React.Component {
 		})
 		const text = `New message from ${this.state.sender!=""?this.state.sender:'Anonymous'}, private=${this.state.private}`
 		if (check){
-			alert('Succesfuly sent your message')
+			const text = `Your message was sent successfully to ${this.state.private?'reymart':'Messages'}`
+			showNotif('System',text)
 			sendMessage(text)
 			navigate('messages')
 		} else {
-			alert("couldn't send message")
+			showNotif('System',"Couldn't send message")
 		}
 		} else {
-			alert("You must provide a message")
+			showNotif("System","Please provide a message")
 		}
 		
 		

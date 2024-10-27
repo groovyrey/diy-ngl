@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import * as Data from '/data/data_manager';
-import {navigate} from '/app'
+import {navigate, showNotif} from '/app'
 
 const password = "MDYyMDIzcmV5"
 
@@ -20,10 +20,10 @@ class Pass extends React.Component{
 		const convert = btoa(this.state.passInput)
 		
 		if (convert==password){
-			alert("Access Granted")
+			showNotif('System','Welcome admin!')
 			navigate('dashboard')
 		} else {
-			alert("Wrong password")
+			showNotif('System','Invalid password')
 		}
 	}
 	

@@ -17,6 +17,15 @@ const routes = {
 }
 
 navigate()
+export function showNotif (title, body){
+	const modal_element = document.getElementById("Modal")
+	const titleText = document.getElementById('modal-title')
+	const bodyText = document.getElementById('modal-body')
+	const modal = new bootstrap.Modal(modal_element)
+	titleText.innerText = title
+	bodyText.innerText = body
+	modal.show()
+}
 
 export function navigate (route){
 	const destination = routes[route]?route:'home'
