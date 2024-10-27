@@ -36,7 +36,7 @@ class Messages extends React.Component {
            const format = `${Msgdate.toDateString()} | ${time}`
            return(
            <div key={item.id} className="card m-1">
-                <h5 className="text-bg-primary card-header"><span className={`bi-${item.data.sender!=""?"person-fill":"question-lg"}`}/> {item.data.sender!=""?item.data.sender:'Anonymous'}</h5>
+                <h5 className="text-bg-info card-header"><span className={`bi-${item.data.sender!=""?"person-fill":"question-lg"}`}/> {item.data.sender!=""?item.data.sender:'Anonymous'}</h5>
                    <div className="card-body">
                             <p>{item.data.message}</p>
                         </div>
