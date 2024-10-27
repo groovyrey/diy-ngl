@@ -9,7 +9,6 @@ import DashBoard from './pages/dashboard'
 const app = document.getElementById('app')
 const preloader = document.getElementById('loader')
 
-
 const routes = {
 	'home': HomePage(),
 	'messages': MessagesPage(),
@@ -17,16 +16,15 @@ const routes = {
 	'dashboard': DashBoard()
 }
 
-function loader() {
-	return(<div className="loader"></div>)
-}
-
 navigate()
+
 export function showNotif (title, body){
 	const modal_element = document.getElementById("Modal")
 	const titleText = document.getElementById('modal-title')
 	const bodyText = document.getElementById('modal-body')
-	const modal = new bootstrap.Modal(modal_element)
+	const modal = new bootstrap.Modal("#Modal",{
+		keyboard: true
+	})
 	titleText.innerText = title
 	bodyText.innerText = body
 	modal.show()
@@ -46,12 +44,10 @@ export function navigate (route){
   }
  })
 	ReactDOM.render(routes[destination],app)
-	console.log(app.readyState)
 	setTimeout(function (){
 		preloader.hidden=true
 	},1000)
 }
-
 
 const buttons = document.querySelectorAll('a[data-route]')
 buttons.forEach((btn)=>{

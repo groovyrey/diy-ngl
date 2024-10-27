@@ -5,6 +5,8 @@ import {navigate, showNotif} from '/app'
 
 const webhookURL = "https://discord.com/api/webhooks/1299650206333141074/ywe-JBRSJb_XbsF3M7aZIWIoYipFX1oi-cse6PKJ2JXIBXzRYhJvGJwZhEpFOYTGrNoi";
 
+const max_msg_chars = 50
+
 class Home extends React.Component {
 	
 	constructor (props){
@@ -21,7 +23,13 @@ class Home extends React.Component {
 		this.setState({'sender':event.target.value})
 	}
 	messageChange = (event) =>{
-		this.setState({'message':event.target.value})
+		
+		if (event.target.value.length>=max_msg_chars){
+			event.target.value = this.state.message
+			showNotif('System',`Message cannot exceed ${max_msg_chars} characters`)
+		} else {
+			this.setState({'message':event.target.value})
+		}
 	}
 	privateChange = (event) =>{
 		this.setState({'private':event.target.checked})
