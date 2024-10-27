@@ -86,7 +86,7 @@ function sendMessage(msg) {
       request.setRequestHeader('Content-type', 'application/json');
 
       const params = {
-        username: "ngl-bot",
+        username: "Micha",
         avatar_url: "",
         content: msg
       }
