@@ -14,7 +14,7 @@ class Home extends React.Component {
 		this.state = {
 			'sender': '',
 			'message':'',
-			'date':new Date().toDateString(),
+			'date':null,
 			'private':false
 		}
 	}
@@ -40,10 +40,10 @@ class Home extends React.Component {
 			const check = Data.addDocument("maindata",{
 			'sender': this.state.sender,
 			'message': this.state.message,
-			'date': this.state.date,
+			'date': new Date(),
 			'private': this.state.private
 		})
-		const text = `${this.state.sender!=""?this.state.sender:'Anonymous'} sent a message to ${this.state.private?'private':'public'}`
+		const text = `New message from ${this.state.sender!=""?this.state.sender:'Anonymous'}, sent to ${this.state.private?'private':'public'}`
 		if (check){
 			const text1 = `Your message was sent successfully to ${this.state.private?'reymart':'Messages'}`
 			showNotif('System',text1)

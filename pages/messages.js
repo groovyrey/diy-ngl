@@ -30,15 +30,19 @@ class Messages extends React.Component {
               <h1 className="">{this.props.title}<span className="bi-envelope-open-fill"></span></h1>
                <p className="">{this.props.text}</p>
                 </div>
-           {this.state.messages.map((item) => (
-            <div key={item.id} className="card m-1">
+           {this.state.messages.map((item) => {
+           const Msgdate = new Date(item.data.date.seconds*1000)
+           const time = Msgdate.getHours()+':'+Msgdate.getMinutes()
+           const format = `${Msgdate.toDateString()} | ${time}`
+           return(
+           <div key={item.id} className="card m-1">
                 <h5 className="text-bg-primary card-header"><span className={`bi-${item.data.sender!=""?"person-fill":"question-lg"}`}/> {item.data.sender!=""?item.data.sender:'Anonymous'}</h5>
                    <div className="card-body">
                             <p>{item.data.message}</p>
                         </div>
-                     <small> <code style={{color:'gray'}} className="card-text m-2">{item.data.date}</code><span style={{color:'gray'}} className={`bi-${item.data.private?"lock-fill":"unlock-fill"}`}/></small>
+                     <small> <code style={{color:'gray'}} className="card-text m-2">{format}</code><span style={{color:'gray'}} className={`bi-${item.data.private?"lock-fill":"unlock-fill"}`}/></small>
                     </div>
-                ))}
+               )})}
             </div>
         );
     }
