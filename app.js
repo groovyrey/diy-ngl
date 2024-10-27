@@ -7,6 +7,7 @@ import AdminPage from './pages/admin'
 import DashBoard from './pages/dashboard'
 
 const app = document.getElementById('app')
+const preloader = document.getElementById('loader')
 
 
 const routes = {
@@ -14,6 +15,10 @@ const routes = {
 	'messages': MessagesPage(),
 	'admin': AdminPage(),
 	'dashboard': DashBoard()
+}
+
+function loader() {
+	return(<div className="loader"></div>)
 }
 
 navigate()
@@ -30,7 +35,7 @@ export function showNotif (title, body){
 export function navigate (route){
 	const destination = routes[route]?route:'home'
 	const buttons = document.querySelectorAll(`a[data-route]`)
- 
+ preloader.hidden=false
  buttons.forEach((navbtn)=>{
   const data = navbtn.getAttribute('data-route')
   
@@ -41,6 +46,10 @@ export function navigate (route){
   }
  })
 	ReactDOM.render(routes[destination],app)
+	console.log(app.readyState)
+	setTimeout(function (){
+		preloader.hidden=true
+	},1000)
 }
 
 

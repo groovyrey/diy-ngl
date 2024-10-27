@@ -14,7 +14,6 @@ export const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-// Define a function to read data from a Firestore collection
 export async function readCollection(collectionName) {
     try {
         const querySnapshot = await db.collection(collectionName).get();

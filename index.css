@@ -8,3 +8,25 @@
 .nav-link{
 	cursor:pointer;
 }
+
+
+
+.centered {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transform: -webkit-translate(-50%, -50%);
+    transform: -moz-translate(-50%, -50%);
+    transform: -ms-translate(-50%, -50%);
+    color:darkred;
+   
+  }
+  
+  .container{
+  	 background: white;
+  	 position: fixed;
+    height: 100%;
+    width: 100%;
+    z-index: 2;
+  }

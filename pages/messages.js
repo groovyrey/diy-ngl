@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import * as Data from '/data/data_manager';
+import {navigate, showNotif} from '/app'
+
 
 
 class Messages extends React.Component {
@@ -15,7 +17,6 @@ class Messages extends React.Component {
     componentDidMount() {
         // Call async function and update state
         Data.readCollection("maindata").then((data) => {
-        	console.log(data)
             this.setState({ messages: data.filter(msg=>msg.data.private==false) });
         }).catch((error) => {
             console.error("Error fetching data:", error);
