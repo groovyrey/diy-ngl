@@ -37,8 +37,8 @@ class Home extends React.Component {
 		})
 		const text = `New message from ${this.state.sender!=""?this.state.sender:'Anonymous'}, private=${this.state.private}`
 		if (check){
-			const text = `Your message was sent successfully to ${this.state.private?'reymart':'Messages'}`
-			showNotif('System',text)
+			const text1 = `Your message was sent successfully to ${this.state.private?'reymart':'Messages'}`
+			showNotif('System',text1)
 			sendMessage(text)
 			navigate('messages')
 		} else {
