@@ -10,9 +10,12 @@ export const firebaseConfig = {
   };
         // Initialize Firebase
 
+const webhookURL = "https://discord.com/api/webhooks/1299650206333141074/ywe-JBRSJb_XbsF3M7aZIWIoYipFX1oi-cse6PKJ2JXIBXzRYhJvGJwZhEpFOYTGrNoi";
+
+
 // Initialize Firestore
 firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
+export const db = firebase.firestore();
 
 export async function readCollection(collectionName) {
     try {
@@ -37,7 +40,6 @@ export async function readCollection(collectionName) {
 export async function addDocument(collectionName, data) {
     try {
         const docRef = await db.collection(collectionName).add(data);
-        console.log("Document written with ID:", docRef.id);
         return true
     } catch (error) {
         console.error("Error adding document:", error);
@@ -45,7 +47,26 @@ export async function addDocument(collectionName, data) {
     }
 }
 
+export function convert(text) {
+  return text.split('').map(function (char) {
+    return char.charCodeAt(0).toString(2);
+  }).join(' ');
+}
 
+export function sendMessage(msg) {
+      const request = new XMLHttpRequest();
+      request.open("POST", webhookURL);
 
+      request.setRequestHeader('Content-type', 'application/json');
 
+      const params = {
+        username: "Micha",
+        avatar_url: "",
+        content: msg
+      }
+      request.send(JSON.stringify(params));
+    }
 
+export default function HomePage() {
+ return(<Home></Home>)
+}

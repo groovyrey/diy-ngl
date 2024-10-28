@@ -3,10 +3,8 @@ import ReactDOM from 'react-dom';
 import * as Data from '/data/data_manager';
 import {navigate, showNotif} from '/app'
 
-const webhookURL = "https://discord.com/api/webhooks/1299650206333141074/ywe-JBRSJb_XbsF3M7aZIWIoYipFX1oi-cse6PKJ2JXIBXzRYhJvGJwZhEpFOYTGrNoi";
-
-const max_msg_chars = 100
-const max_sender_chars = 30
+const max_msg_chars = 5000
+const max_sender_chars = 100
 
 class Home extends React.Component {
 	
@@ -16,11 +14,14 @@ class Home extends React.Component {
 			'sender': '',
 			'message':'',
 			'date':null,
-			'private':false
+			'private':false,
+			'sl':`0/${max_sender_chars}`,
+			'ml':`0/${max_msg_chars}`
 		}
 	}
 	
 	senderChange = (event) =>{
+		this.setState({'sl':`${event.target.value.length}/${max_sender_chars}`})
 		if (event.target.value.length >= max_sender_chars) {
 			event.target.value = this.state.sender
 			showNotif('System', `Sender cannot exceed ${max_sender_chars} characters`)
@@ -29,6 +30,7 @@ class Home extends React.Component {
 		}
 	}
 	messageChange = (event) =>{
+		this.setState({'ml':`${event.target.value.length}/${max_msg_chars}`})
 		if (event.target.value.length>=max_msg_chars){
 			event.target.value = this.state.message
 			showNotif('System',`Message cannot exceed ${max_msg_chars} characters`)
@@ -52,7 +54,7 @@ class Home extends React.Component {
 		if (check){
 			const text1 = `Your message was sent successfully to ${this.state.private?'reymart':'Messages'}`
 			showNotif('System',text1)
-			sendMessage(text)
+			Data.sendMessage(text)
 			navigate('messages')
 		} else {
 			showNotif('System',"Couldn't send message")
@@ -71,10 +73,13 @@ class Home extends React.Component {
    <div className="card">
    <h5 className="card-header text-bg-primary">Message me</h5>
    <div className="card-body">
+     <code><small className="m-0 p-1">{this.state.sl}</small></code>
    <div className="input-group p-1">
   <span className="input-group-text" id="addon-wrapping"><span className="bi-person-fill"></span></span>
+
  	<input onChange={this.senderChange} type="text" className="form-control" placeholder="Sender(Optional)" aria-label="Username" aria-describedby="addon-wrapping"/>
   </div>
+  <code><small className="m-0 p-1">{this.state.ml}</small></code>
   <div className="input-group p-1">
   <textarea onChange={this.messageChange} placeholder="Message" className="form-control" aria-label="With textarea"></textarea>
 </div>
@@ -91,20 +96,6 @@ class Home extends React.Component {
   )
  }
 }
-
-function sendMessage(msg) {
-      const request = new XMLHttpRequest();
-      request.open("POST", webhookURL);
-
-      request.setRequestHeader('Content-type', 'application/json');
-
-      const params = {
-        username: "Micha",
-        avatar_url: "",
-        content: msg
-      }
-      request.send(JSON.stringify(params));
-    }
 
 export default function HomePage() {
  return(<Home></Home>)
