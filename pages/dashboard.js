@@ -60,8 +60,6 @@ class DashB extends React.Component {
     }
 }
 
-
-
 export default function DashBoard (){
-	return (<DashB title="Private Messages " text="Only private messages will appear here" />)
+	return (<DashB title="All messages " text="All messages will appear here with delete button" />)
 }
