@@ -22,7 +22,7 @@ class Home extends React.Component {
 	
 	senderChange = (event) =>{
 		if (event.target.value.length >= max_sender_chars) {
-			event.target.value = this.state.message
+			event.target.value = this.state.sender
 			showNotif('System', `Sender cannot exceed ${max_sender_chars} characters`)
 		} else {
 			this.setState({ 'sender': event.target.value })
