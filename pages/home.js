@@ -67,7 +67,7 @@ class Home extends React.Component {
 		if (check){
 			const text1 = `Your message was sent successfully to ${this.state.private?'reymart':'Messages'}`
 			showNotif('System',text1)
-			Data.sendMessage(text)
+			//Data.sendMessage(text)
 			navigate('messages')
 		} else {
 			showNotif('System',"Couldn't send message")

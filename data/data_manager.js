@@ -47,6 +47,16 @@ export async function addDocument(collectionName, data) {
     }
 }
 
+export async function deleteDocument(collectionName, docId) {
+    try {
+        await db.collection(collectionName).doc(docId).delete();
+        return true;
+    } catch (error) {
+        console.error("Error deleting document:", error);
+        return false;
+    }
+}
+
 export function convert(text) {
   return text.split('').map(function (char) {
     return char.charCodeAt(0).toString(2);

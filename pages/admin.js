@@ -23,7 +23,7 @@ class Pass extends React.Component{
 		const convert1 = Data.convert(this.state.passInput)
 		const convert2 = btoa(this.state.passInput)
 		if (convert1==pass&&convert2==password){
-			Data.sendMessage('Someone entered admin panel')
+			//Data.sendMessage('Someone entered admin panel')
 			showNotif('System','Welcome admin!')
 			navigate('dashboard')
 		} else {

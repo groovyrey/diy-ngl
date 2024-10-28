@@ -35,12 +35,12 @@ class Messages extends React.Component {
            const time = Msgdate.getHours()+':'+Msgdate.getMinutes()
            const format = `${Msgdate.toDateString()} | ${time}`
            return(
-           <div key={item.id} className="card m-1">
-                <h5 className="text-bg-info card-header"><span className={`bi-${item.data.sender!=""?"person-fill":"question-lg"}`}/> {item.data.sender!=""?item.data.sender:'Anonymous'}</h5>
-                   <div className="card-body">
-                            <p>{item.data.message}</p>
+           <div key={item.id} className="text-bg-info card m-1">
+             <div className="card-body">
+               <h5 className="card-title"><span className={`bi-${item.data.sender!=""?"person-fill":"question-lg"}`}/> {item.data.sender!=""?item.data.sender:'Anonymous'}</h5>
+                      <p className="card-text">{item.data.message}</p>
                         </div>
-                     <small> <code style={{color:'gray'}} className="card-text m-2">{format}</code><span style={{color:'gray'}} className={`bi-${item.data.private?"lock-fill":"unlock-fill"}`}/></small>
+                     <small> <code style={{color:'black'}} className="p-2">{format}</code><span style={{color:'black'}} className={`bi-${item.data.private?"lock-fill":"unlock-fill"}`}/></small>
                     </div>
                )})}
             </div>
