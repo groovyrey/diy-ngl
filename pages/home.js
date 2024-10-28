@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import * as Data from '/data/data_manager';
 import {navigate, showNotif} from '/app'
 
-const max_msg_chars = 5000
+const max_msg_chars = 3000
 const max_sender_chars = 100
 
 class Home extends React.Component {
@@ -11,38 +11,51 @@ class Home extends React.Component {
 	constructor (props){
 		super(props)
 		this.state = {
-			'sender': '',
-			'message':'',
+			'sender': "",
+			'message':"",
 			'date':null,
 			'private':false,
 			'sl':`0/${max_sender_chars}`,
 			'ml':`0/${max_msg_chars}`
 		}
 	}
-	
+	//Sender box limitation handler
 	senderChange = (event) =>{
-		this.setState({'sl':`${event.target.value.length}/${max_sender_chars}`})
-		if (event.target.value.length >= max_sender_chars) {
-			event.target.value = this.state.sender
+		if (event.target.value.length > max_sender_chars) {
+		//	event.target.value = this.state.sender
+		const fil = event.target.value.split("",max_sender_chars)
+		let text = ""
+		for (let x in fil){
+			text+=fil[x]
+		}
+		event.target.value=text
 			showNotif('System', `Sender cannot exceed ${max_sender_chars} characters`)
 		} else {
 			this.setState({ 'sender': event.target.value })
 		}
+		this.setState({'sl':`${event.target.value.length}/${max_sender_chars}`})
 	}
+	//Message box limitations handler
 	messageChange = (event) =>{
-		this.setState({'ml':`${event.target.value.length}/${max_msg_chars}`})
-		if (event.target.value.length>=max_msg_chars){
-			event.target.value = this.state.message
-			showNotif('System',`Message cannot exceed ${max_msg_chars} characters`)
+		if (event.target.value.length > max_msg_chars){
+		const fil1 = event.target.value.split("",max_msg_chars)
+		let text1 = ""
+		for (let x in fil1){
+			text1+=fil1[x]
+		}
+		event.target.value=text1
+		showNotif('System', `Message cannot exceed ${max_msg_chars} characters`)
 		} else {
 			this.setState({'message':event.target.value})
 		}
+		this.setState({'ml':`${event.target.value.length}/${max_msg_chars}`})
 	}
+	//Visibility handler
 	privateChange = (event) =>{
 		this.setState({'private':event.target.checked})
 	}
+	//Message submission handler
 	buttonClick = (event) => {
-		
 		if (this.state.message!=""){
 			const check = Data.addDocument("maindata",{
 			'sender': this.state.sender,
