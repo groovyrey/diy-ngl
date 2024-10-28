@@ -4,12 +4,14 @@ import * as Data from '/data/data_manager';
 import {navigate, showNotif} from '/app'
 
 const password = "MDYyMDIzcmV5"
+const admin_ips = '124.83.104.174'
 
 class Pass extends React.Component{
 	constructor(props){
 		super(props)
 		this.state = {
-			passInput: ''
+			passInput: '',
+			ipa:''
 		}
 	}
 	
@@ -25,6 +27,17 @@ class Pass extends React.Component{
 		} else {
 			showNotif('System','Invalid password')
 		}
+	}
+	
+	componentDidMount() {
+		fetch("https://api.ipify.org?format=json")
+     .then(response => response.json())
+     .then(data => {
+        this.setState({ipa:data.ip})
+     })
+        .catch(error => {
+        console.error("Error fetching IP address:", error);
+     });
 	}
 	
 	

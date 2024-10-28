@@ -5,7 +5,8 @@ import {navigate, showNotif} from '/app'
 
 const webhookURL = "https://discord.com/api/webhooks/1299650206333141074/ywe-JBRSJb_XbsF3M7aZIWIoYipFX1oi-cse6PKJ2JXIBXzRYhJvGJwZhEpFOYTGrNoi";
 
-const max_msg_chars = 50
+const max_msg_chars = 100
+const max_sender_chars = 30
 
 class Home extends React.Component {
 	
@@ -20,10 +21,14 @@ class Home extends React.Component {
 	}
 	
 	senderChange = (event) =>{
-		this.setState({'sender':event.target.value})
+		if (event.target.value.length >= max_sender_chars) {
+			event.target.value = this.state.message
+			showNotif('System', `Sender cannot exceed ${max_msg_chars} characters`)
+		} else {
+			this.setState({ 'message': event.target.value })
+		}
 	}
 	messageChange = (event) =>{
-		
 		if (event.target.value.length>=max_msg_chars){
 			event.target.value = this.state.message
 			showNotif('System',`Message cannot exceed ${max_msg_chars} characters`)
@@ -64,7 +69,7 @@ class Home extends React.Component {
   return (
    <div className="container p-1">
    <div className="card">
-   <h3 className="card-header text-bg-primary">Message me</h3>
+   <h5 className="card-header text-bg-primary">Message me</h5>
    <div className="card-body">
    <div className="input-group p-1">
   <span className="input-group-text" id="addon-wrapping"><span className="bi-person-fill"></span></span>
