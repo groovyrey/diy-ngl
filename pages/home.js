@@ -21,7 +21,7 @@ class Home extends React.Component {
 	}
 	//Sender box limitation handler
 	senderChange = (event) =>{
-		if (event.target.value.length > max_sender_chars) {
+		if (event.target.value.length >= max_sender_chars) {
 		//	event.target.value = this.state.sender
 		const fil = event.target.value.split("",max_sender_chars)
 		let text = ""
@@ -86,13 +86,13 @@ class Home extends React.Component {
    <div className="card">
    <h5 className="card-header text-bg-primary">Message me</h5>
    <div className="card-body">
-     <code><small className="m-0 p-1">{this.state.sl}</small></code>
+     <code><small className="text-primary m-0 p-1">{this.state.sl}</small></code>
    <div className="input-group p-1">
   <span className="input-group-text" id="addon-wrapping"><span className="bi-person-fill"></span></span>
 
- 	<input onChange={this.senderChange} type="text" className="form-control" placeholder="Sender(Optional)" aria-label="Username" aria-describedby="addon-wrapping"/>
+ 	<input id="senderIn" onChange={this.senderChange} type="text" className="form-control" placeholder="Sender(Optional)" aria-label="Username" aria-describedby="addon-wrapping"/>
   </div>
-  <code><small className="m-0 p-1">{this.state.ml}</small></code>
+  <code><small className="text-primary m-0 p-1">{this.state.ml}</small></code>
   <div className="input-group p-1">
   <textarea onChange={this.messageChange} placeholder="Message" className="form-control" aria-label="With textarea"></textarea>
 </div>
