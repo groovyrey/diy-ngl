@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import * as Data from '/data/data_manager';
+import {MessageContainer} from './messages'
 import {navigate, showNotif} from '/app'
 
 class DashB extends React.Component {
@@ -46,14 +47,7 @@ class DashB extends React.Component {
            const time = Msgdate.getHours()+':'+Msgdate.getMinutes()
            const format = `${Msgdate.toDateString()} | ${time}`
            return (
-            <div key={item.id} className="text-bg-info card m-1">
-             <button onClick={this.deleteMessage} type="button" className="btn-close position-absolute top-0 end-0 m-2" aria-label="Close" value={item.id}></button>
-              <div className="card-body">
-                 <h5 className="card-title"><span className={`bi-${item.data.sender!=""?"person-fill":"question-lg"}`}/> {item.data.sender!=""?item.data.sender:'Anonymous'}</h5>
-                    <p>{item.data.message}</p>
-                        </div>
-                     <small> <code style={{color:'black'}} className="card-text m-2">{format}</code><span style={{color:`${item.data.private?'red':'black'}`}} className={`bi-${item.data.private?"lock-fill":"unlock-fill"}`}/></small>
-                    </div>
+<MessageContainer del={true} id={item.data.id} sender={item.data.sender} message={item.data.message} private={item.data.private} date={format}/>
                ) })}
             </div>
         );

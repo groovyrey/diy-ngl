@@ -4,6 +4,38 @@ import * as Data from '/data/data_manager';
 import {navigate, showNotif} from '/app'
 
 
+export class MessageContainer extends React.Component{
+	constructor(props){
+		super(props)
+	};
+	
+	deleteMessage (event){
+    	const id = event.target.value
+    	const element = event.target.parentElement
+     const check = Data.deleteDocument("maindata",id)
+     
+    	if (check){
+    		element.remove()
+    		showNotif('System',`${id} deleted`)
+    	} else {
+    		showNotif('System','failed to delete message')
+    	}
+    }
+	
+	render(){
+		return (
+			   <div key={this.props.id} className="text-bg-info card m-1">
+	      <button hidden={this.props.del?false:true} onClick={this.deleteMessage} type="button" className="btn-close position-absolute top-0 end-0 m-2" aria-label="Close" value={this.props.id}></button>
+        <div className="card-body">
+          <h5 className="card-title"><span className={`bi-${this.props.sender!=""?"person-fill":"question-lg"}`}/> {this.props.sender!=""?this.props.sender:'Anonymous'}</h5>
+             <p className="card-text">{this.props.message}</p>
+                        </div>
+           <small> <code style={{color:'black'}} className="p-2">{this.props.date}</code><span style={{color:this.props.private?'red':'black'}} className={`bi-${this.props.private?"lock-fill":"unlock-fill"}`}/></small>
+       </div>
+		)
+	}
+}
+
 
 class Messages extends React.Component {
     constructor(props) {
@@ -35,13 +67,7 @@ class Messages extends React.Component {
            const time = Msgdate.getHours()+':'+Msgdate.getMinutes()
            const format = `${Msgdate.toDateString()} | ${time}`
            return(
-           <div key={item.id} className="text-bg-info card m-1">
-             <div className="card-body">
-               <h5 className="card-title"><span className={`bi-${item.data.sender!=""?"person-fill":"question-lg"}`}/> {item.data.sender!=""?item.data.sender:'Anonymous'}</h5>
-                      <p className="card-text">{item.data.message}</p>
-                        </div>
-                     <small> <code style={{color:'black'}} className="p-2">{format}</code><span style={{color:'black'}} className={`bi-${item.data.private?"lock-fill":"unlock-fill"}`}/></small>
-                    </div>
+           <MessageContainer del={false} key={item.id} id={item.id} sender={item.data.sender} message={item.data.message} private={item.data.private} date={format}/>
                )})}
             </div>
         );

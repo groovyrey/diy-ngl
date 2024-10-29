@@ -9,9 +9,7 @@ export const firebaseConfig = {
     measurementId: "G-JZJ8JJXRLF"
   };
         // Initialize Firebase
-
 const webhookURL = "https://discord.com/api/webhooks/1299650206333141074/ywe-JBRSJb_XbsF3M7aZIWIoYipFX1oi-cse6PKJ2JXIBXzRYhJvGJwZhEpFOYTGrNoi";
-
 
 // Initialize Firestore
 firebase.initializeApp(firebaseConfig);
@@ -23,7 +21,7 @@ export async function readCollection(collectionName) {
         let datatable = []
         querySnapshot.forEach((doc) => {
          //console.log(doc.id)
-            /*console.log(doc.data())*/
+            //console.log(doc.data())
             datatable.push({
              id:doc.id,
              data:doc.data()
