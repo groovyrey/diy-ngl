@@ -12,14 +12,27 @@ export class MessageContainer extends React.Component{
 	deleteMessage (event){
     	const id = event.target.value
     	const element = event.target.parentElement
-     const check = Data.deleteDocument("maindata",id)
-     
-    	if (check){
-    		element.remove()
-    		showNotif('System',`${id} deleted`)
-    	} else {
-    		showNotif('System','failed to delete message')
-    	}
+     const modal = new bootstrap.Modal("#delModal",{keybaord:false})
+		   const title = document.querySelector("#deltitle")
+		   const body = document.querySelector("#delbody")
+		   const delbtn = document.querySelector("#delete")
+		   const cancelbtn = document.querySelector("#cancel")
+		  
+     if (modal){
+     	title.innerText="System"
+     	body.innerText=`Confirm to delete this message?\nId: ${id}`
+     	modal.show()
+     	delbtn.onclick=()=>{
+     		const check = Data.deleteDocument("maindata", id)
+     		modal.hide()
+     		if (check) {
+     			showNotif('System', `${id} deleted`)
+     			element.remove()
+     		} else {
+     			showNotif('Error', 'Failed to delete message')
+     		}
+     	}
+     }
     }
 	
 	render(){

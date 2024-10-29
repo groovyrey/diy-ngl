@@ -6,6 +6,9 @@ import {navigate, showNotif} from '/app'
 const max_msg_chars = 3000
 const max_sender_chars = 100
 
+
+
+
 class Home extends React.Component {
 	
 	constructor (props){
@@ -20,6 +23,9 @@ class Home extends React.Component {
 		}
 	}
 	//Sender box limitation handler
+	
+	componentDidMount(){}
+	
 	senderChange = (event) =>{
 		if (event.target.value.length >= max_sender_chars) {
 		//	event.target.value = this.state.sender

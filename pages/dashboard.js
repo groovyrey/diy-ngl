@@ -13,19 +13,6 @@ class DashB extends React.Component {
         };
     }
     // Fetch data after component mounts
-    deleteMessage (event){
-    	const id = event.target.value
-    	const element = event.target.parentElement
-     const check = Data.deleteDocument("maindata",id)
-     
-    	if (check){
-    		element.style.display='none'
-    		showNotif('System',`${id} deleted`)
-    	} else {
-    		showNotif('System','failed to delete message')
-    	}
-    }
-    
     componentDidMount() {
         // Call async function and update state
         Data.readCollection("maindata").then((data) => {
@@ -47,7 +34,7 @@ class DashB extends React.Component {
            const time = Msgdate.getHours()+':'+Msgdate.getMinutes()
            const format = `${Msgdate.toDateString()} | ${time}`
            return (
-<MessageContainer del={true} id={item.data.id} sender={item.data.sender} message={item.data.message} private={item.data.private} date={format}/>
+<MessageContainer key={item.id} del={true} id={item.id} sender={item.data.sender} message={item.data.message} private={item.data.private} date={format}/>
                ) })}
             </div>
         );
