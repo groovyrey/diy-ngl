@@ -16,7 +16,6 @@ export class MessageContainer extends React.Component{
 		   const title = document.querySelector("#deltitle")
 		   const body = document.querySelector("#delbody")
 		   const delbtn = document.querySelector("#delete")
-		   const cancelbtn = document.querySelector("#cancel")
 		  
      if (modal){
      	title.innerText="System"
@@ -37,10 +36,11 @@ export class MessageContainer extends React.Component{
 	
 	render(){
 		return (
-			   <div key={this.props.id} className="text-bg-info card m-1">
+			   <div key={this.props.id} className="card m-1">
 	      <button hidden={this.props.del?false:true} onClick={this.deleteMessage} type="button" className="btn-close position-absolute top-0 end-0 m-2" aria-label="Close" value={this.props.id}></button>
+	                <h5 className="card-header"><span className={`bi-${this.props.sender!=""?"person-fill":"question-lg"}`}/> {this.props.sender!=""?this.props.sender:'Anonymous'}</h5>
         <div className="card-body">
-          <h5 className="card-title"><span className={`bi-${this.props.sender!=""?"person-fill":"question-lg"}`}/> {this.props.sender!=""?this.props.sender:'Anonymous'}</h5>
+
              <p className="card-text">{this.props.message}</p>
                         </div>
            <small> <code style={{color:'black'}} className="p-2">{this.props.date}</code><span style={{color:this.props.private?'red':'black'}} className={`bi-${this.props.private?"lock-fill":"unlock-fill"}`}/></small>
