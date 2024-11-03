@@ -37,13 +37,14 @@ export class MessageContainer extends React.Component{
 	render(){
 		return (
 			   <div key={this.props.id} className="card m-1">
-	      <button hidden={this.props.del?false:true} onClick={this.deleteMessage} type="button" className="btn-close position-absolute top-0 end-0 m-2" aria-label="Close" value={this.props.id}></button>
+	      <button hidden={this.props.del?false:true} onClick={this.deleteMessage} type="button"
+	      aria-label="Close" className="btn m-1 text-danger position-absolute top-0 end-0" value={this.props.id}><span className="bi-trash-fill"/></button>
 	                <h5 className="card-header"><span className={`bi-${this.props.sender!=""?"person-fill":"question-lg"}`}/> {this.props.sender!=""?this.props.sender:'Anonymous'}</h5>
         <div className="card-body">
 
              <p className="card-text">{this.props.message}</p>
+         <small> <code className="text-secondary">{this.props.date}</code> <span className={`bi-${this.props.private?"lock-fill":"unlock-fill"} text-${this.props.private?'danger':'secondary'}`}/></small>
                         </div>
-           <small> <code style={{color:'black'}} className="p-2">{this.props.date}</code><span style={{color:this.props.private?'red':'black'}} className={`bi-${this.props.private?"lock-fill":"unlock-fill"}`}/></small>
        </div>
 		)
 	}

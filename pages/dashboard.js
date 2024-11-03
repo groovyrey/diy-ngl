@@ -25,7 +25,7 @@ class DashB extends React.Component {
     render() {
         return (
           <div className="container p-1">
-             <div id="home-page" className="p-5 m-0 text-light text-center bg-dark rounded">
+             <div id="home-page" className="p-5 m-0 text-primary border border-primary text-center rounded">
               <h1 className="">{this.props.title}<span className="bi-database-fill-lock"></span></h1>
                <p className="">{this.props.text}</p>
                 </div>
