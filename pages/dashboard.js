@@ -23,6 +23,7 @@ class DashB extends React.Component {
     }
 
     render() {
+    	let count = 0
         return (
           <div className="container p-1">
              <div id="home-page" className="p-5 m-0 text-primary border border-primary text-center rounded">
@@ -33,9 +34,11 @@ class DashB extends React.Component {
            const Msgdate = new Date(item.data.date.seconds*1000)
            const time = Msgdate.getHours()+':'+Msgdate.getMinutes()
            const format = `${Msgdate.toDateString()} | ${time}`
+          count++
            return (
-<MessageContainer key={item.id} del={true} id={item.id} sender={item.data.sender} message={item.data.message} private={item.data.private} date={format}/>
-               ) })}
+<MessageContainer key={count} del={true} id={item.id} sender={item.data.sender} message={item.data.message} private={item.data.private} date={format}/>
+               )
+               })}
             </div>
         );
     }

@@ -9,9 +9,9 @@ export class MessageContainer extends React.Component{
 		super(props)
 	};
 	
-	deleteMessage (event){
-    	const id = event.target.value
-    	const element = event.target.parentElement
+	deleteMessage (id, from){
+    	console.log(id)
+    	const element = document.querySelector(`[value='${id}'`).parentElement
      const modal = new bootstrap.Modal("#delModal",{keybaord:false})
 		   const title = document.querySelector("#deltitle")
 		   const body = document.querySelector("#delbody")
@@ -19,7 +19,7 @@ export class MessageContainer extends React.Component{
 		  
      if (modal){
      	title.innerText="System"
-     	body.innerText=`Confirm to delete this message?\nId: ${id}`
+     	body.innerText=`Confirm to delete this message from ${from!=""?from:'Anonymous'}?`
      	modal.show()
      	delbtn.onclick=()=>{
      		const check = Data.deleteDocument("maindata", id)
@@ -36,9 +36,9 @@ export class MessageContainer extends React.Component{
 	
 	render(){
 		return (
-			   <div key={this.props.id} className="card m-1">
-	      <button hidden={this.props.del?false:true} onClick={this.deleteMessage} type="button"
-	      aria-label="Close" className="btn m-1 text-danger position-absolute top-0 end-0" value={this.props.id}><span className="bi-trash-fill"/></button>
+			   <div className="card m-1">
+	      <button hidden={this.props.del?false:true} onClick={()=>this.deleteMessage(this.props.id, this.props.sender)} type="button"
+	      className="btn m-1 text-danger position-absolute top-0 end-0" value={this.props.id}><span className="bi-trash-fill"/></button>
 	                <h5 className="card-header"><span className={`bi-${this.props.sender!=""?"person-fill":"question-lg"}`}/> {this.props.sender!=""?this.props.sender:'Anonymous'}</h5>
         <div className="card-body">
 
@@ -70,6 +70,7 @@ class Messages extends React.Component {
     }
 
     render() {
+    	let count = 0
         return (
           <div className="container p-1">
              <div id="home-page" className="p-5 m-0 text-light text-center bg-dark rounded">
@@ -80,8 +81,9 @@ class Messages extends React.Component {
            const Msgdate = new Date(item.data.date.seconds*1000)
            const time = Msgdate.getHours()+':'+Msgdate.getMinutes()
            const format = `${Msgdate.toDateString()} | ${time}`
+           count++
            return(
-           <MessageContainer del={false} key={item.id} id={item.id} sender={item.data.sender} message={item.data.message} private={item.data.private} date={format}/>
+           <MessageContainer key={count} del={false} id={item.id} sender={item.data.sender} message={item.data.message} private={item.data.private} date={format}/>
                )})}
             </div>
         );
