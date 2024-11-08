@@ -4,6 +4,25 @@ import * as Data from '/data/data_manager';
 import {navigate, showNotif} from '/app'
 
 
+function timeAgo(firebaseTimestamp) {
+    const now = new Date();
+    const timestampDate = firebaseTimestamp.toDate(); // Convert Firebase Timestamp to JS Date
+    const diffInSeconds = Math.floor((now - timestampDate) / 1000);
+
+    if (diffInSeconds < 60) {
+        return `${diffInSeconds} seconds ago`;
+    } else if (diffInSeconds < 3600) {
+        const minutes = Math.floor(diffInSeconds / 60);
+        return `${minutes} minute${minutes !== 1 ? 's' : ''} ago`;
+    } else if (diffInSeconds < 86400) {
+        const hours = Math.floor(diffInSeconds / 3600);
+        return `${hours} hour${hours !== 1 ? 's' : ''} ago`;
+    } else {
+        const days = Math.floor(diffInSeconds / 86400);
+        return `${days} day${days !== 1 ? 's' : ''} ago`;
+    }
+}
+
 export class MessageContainer extends React.Component{
 	constructor(props){
 		super(props)
@@ -43,7 +62,7 @@ export class MessageContainer extends React.Component{
         <div className="card-body">
 
              <p className="card-text">{this.props.message}</p>
-         <small> <code className="text-secondary">{this.props.date}</code> <span className={`bi-${this.props.private?"lock-fill":"unlock-fill"} text-${this.props.private?'danger':'secondary'}`}/></small>
+         <small> <code className="text-secondary">{timeAgo(this.props.date)} </code> <span className={`bi-${this.props.private?"lock-fill":"unlock-fill"} text-${this.props.private?'danger':'secondary'}`}/></small>
                         </div>
        </div>
 		)
@@ -83,7 +102,7 @@ class Messages extends React.Component {
            const format = `${Msgdate.toDateString()} | ${time}`
            count++
            return(
-           <MessageContainer key={count} del={false} id={item.id} sender={item.data.sender} message={item.data.message} private={item.data.private} date={format}/>
+           <MessageContainer key={count} del={false} id={item.id} sender={item.data.sender} message={item.data.message} private={item.data.private} date={item.data.date}/>
                )})}
             </div>
         );

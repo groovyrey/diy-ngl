@@ -36,7 +36,7 @@ class DashB extends React.Component {
            const format = `${Msgdate.toDateString()} | ${time}`
           count++
            return (
-<MessageContainer key={count} del={true} id={item.id} sender={item.data.sender} message={item.data.message} private={item.data.private} date={format}/>
+<MessageContainer key={count} del={true} id={item.id} sender={item.data.sender} message={item.data.message} private={item.data.private} date={item.data.date}/>
                )
                })}
             </div>
