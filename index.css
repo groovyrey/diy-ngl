@@ -10,7 +10,7 @@
 }
 
 body{
-	padding-top: 4.8rem;
+	padding-top: 4.9rem;
 	background: url("assets/bg.jpg");
 	background-size: cover;
 	background-position: center;
@@ -47,3 +47,5 @@ body{
     width: 100%;
     z-index: 5;
   }
+  
+  
