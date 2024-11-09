@@ -32,6 +32,7 @@ export function showNotif (title, body){
 export function navigate (route){
 	const destination = routes[route]?route:'home'
 	const buttons = document.querySelectorAll(`a[data-route]`)
+	const navbar = document.getElementById('collapsibleNavbar')
  preloader.hidden=false
  buttons.forEach((navbtn)=>{
   const data = navbtn.getAttribute('data-route')
@@ -45,6 +46,8 @@ export function navigate (route){
 	ReactDOM.render(routes[destination],app)
 	setTimeout(function (){
 		preloader.hidden=true
+		navbar.classList.remove('show')
+  navbar.classList.add('hide')
 	},1000)
 }
 
