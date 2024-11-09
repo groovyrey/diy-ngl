@@ -10,7 +10,8 @@
 }
 
 body{
-	padding-top: 4.9rem;
+/*	padding-top: 4.9rem;*/
+
 	background: url("assets/bg.jpg");
 	background-size: cover;
 	background-position: center;
@@ -18,9 +19,8 @@ body{
 	background-attachment: fixed;
 }
 
-#topbar, #collapsibleNavbar{
-	-webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
+#topbar{
+	z-index: 6;
 }
 
 .centered {
