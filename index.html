@@ -13,7 +13,7 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  <nav id="topbar" class="navbar border rounded border-dark m-1 fixed-top navbar-expand-sm navbar-light">
   <div class="container-fluid">
     <a class="navbar-brand" data-bs-toggle="offcanvas" data-bs-target="#sidebar">
      <img id="logo" src="/assets/mail.png" alt="logo">
@@ -22,7 +22,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="collapsibleNavbar">
-      <ul class="navbar-nav nav-pills">
+      <ul class="navbar-nav nav-underline">
         <li class="nav-item">
           <a class="nav-link active p-2" style="cursor:pointer" data-route="home"><span class="bi-send-fill"></span> Send</a>
         </li>
@@ -38,7 +38,7 @@
 </nav>
   	<div class="contain" id="loader">
   		<div class="centered">
-  		<div class="spinner-border text-primary" role="status">
+  		<div class="spinner-border text-dark" role="status">
   <span class="visually-hidden">Loading...</span>
 </div>
 </div>

@@ -57,13 +57,15 @@ export class MessageContainer extends React.Component{
 		return (
 			   <div className="card m-1">
 	      <button hidden={this.props.del?false:true} onClick={()=>this.deleteMessage(this.props.id, this.props.sender)} type="button"
-	      className="btn m-1 text-danger position-absolute top-0 end-0" value={this.props.id}><span className="bi-trash-fill"/></button>
-	                <h5 className="card-header"><span className={`bi-${this.props.sender!=""?"person-fill":"question-lg"}`}/> {this.props.sender!=""?this.props.sender:'Anonymous'}</h5>
+	      className="btn m-1 text-danger position-absolute bottom-0 end-0" value={this.props.id}><span className="bi-trash-fill"/></button>
+	      
         <div className="card-body">
-
-             <p className="card-text">{this.props.message}</p>
-         <small> <code className="text-secondary">{timeAgo(this.props.date)} </code> <span className={`bi-${this.props.private?"lock-fill":"unlock-fill"} text-${this.props.private?'danger':'secondary'}`}/></small>
-                        </div>
+  <h5 className="card-title"><span className={`bi-${this.props.sender!=""?"person-fill":"question-lg"}`}/> {this.props.sender!=""?this.props.sender:'Anonymous'}</h5>
+             <p className="card-text text-secondary">{this.props.message}</p>
+         </div>
+         <div class="card-footer">
+         <small> <code className="text-secondary"> <span className={`bi-${this.props.private?"lock-fill":"unlock-fill"} text-${this.props.private?'danger':'secondary'}`}/> {timeAgo(this.props.date)}</code></small>
+          </div>
        </div>
 		)
 	}
@@ -92,7 +94,7 @@ class Messages extends React.Component {
     	let count = 0
         return (
           <div className="container p-1">
-             <div id="home-page" className="p-5 m-0 text-light text-center bg-dark rounded">
+             <div id="home-page" className="p-5 m-0 text-dark text-center bg-light rounded">
               <h1 className="">{this.props.title}<span className="bi-envelope-open-fill"></span></h1>
                <p className="">{this.props.text}</p>
                 </div>
