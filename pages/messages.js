@@ -5,22 +5,28 @@ import {navigate, showNotif} from '/app'
 
 
 function timeAgo(firebaseTimestamp) {
-    const now = new Date();
-    const timestampDate = firebaseTimestamp.toDate(); // Convert Firebase Timestamp to JS Date
-    const diffInSeconds = Math.floor((now - timestampDate) / 1000);
+	const now = new Date();
+	const timestampDate = firebaseTimestamp.toDate(); // Convert Firebase Timestamp to JS Date
+	const diffInSeconds = Math.floor((now - timestampDate) / 1000);
 
-    if (diffInSeconds < 60) {
-        return `${diffInSeconds} seconds ago`;
-    } else if (diffInSeconds < 3600) {
-        const minutes = Math.floor(diffInSeconds / 60);
-        return `${minutes} minute${minutes !== 1 ? 's' : ''} ago`;
-    } else if (diffInSeconds < 86400) {
-        const hours = Math.floor(diffInSeconds / 3600);
-        return `${hours} hour${hours !== 1 ? 's' : ''} ago`;
-    } else {
-        const days = Math.floor(diffInSeconds / 86400);
-        return `${days} day${days !== 1 ? 's' : ''} ago`;
-    }
+	if (diffInSeconds < 60) {
+		return `${diffInSeconds} seconds ago`;
+	} else if (diffInSeconds < 3600) {
+		const minutes = Math.floor(diffInSeconds / 60);
+		return `${minutes} minute${minutes !== 1 ? 's' : ''} ago`;
+	} else if (diffInSeconds < 86400) {
+		const hours = Math.floor(diffInSeconds / 3600);
+		return `${hours} hour${hours !== 1 ? 's' : ''} ago`;
+	} else if (diffInSeconds < 2592000) { // Less than 30 days
+		const days = Math.floor(diffInSeconds / 86400);
+		return `${days} day${days !== 1 ? 's' : ''} ago`;
+	} else if (diffInSeconds < 31536000) { // Less than 1 year
+		const months = Math.floor(diffInSeconds / 2592000); // Approximate month as 30 days
+		return `${months} month${months !== 1 ? 's' : ''} ago`;
+	} else {
+		const years = Math.floor(diffInSeconds / 31536000); // Approximate year as 365 days
+		return `${years} year${years !== 1 ? 's' : ''} ago`;
+	}
 }
 
 export class MessageContainer extends React.Component{
