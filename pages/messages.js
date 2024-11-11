@@ -63,7 +63,7 @@ export class MessageContainer extends React.Component{
 		return (
 			   <div className="card m-3">
 	      <button hidden={this.props.del?false:true} onClick={()=>this.deleteMessage(this.props.id, this.props.sender)} type="button"
-	      className="btn m-1 text-danger position-absolute bottom-0 end-0" value={this.props.id}><span className="bi-trash-fill"/></button>
+	      className="btn text-danger position-absolute bottom-0 end-0" value={this.props.id}><span className="bi-trash-fill"/></button>
 	      
         <div className="card-body">
   <h5 className="card-title"><span className={`bi-${this.props.sender!=""?"person-fill":"question-lg"}`}/> {this.props.sender!=""?this.props.sender:'Anonymous'}</h5>
