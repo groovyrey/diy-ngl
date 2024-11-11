@@ -7,11 +7,20 @@
 
 .nav-link{
 	cursor:pointer;
+	padding: 5px;
+}
+
+.active{
+	font-size: 20px;
+	-webkit-border-radius: 5px;
+border-radius: 5px;
+background: #ffffff;
+-webkit-box-shadow: 5px 5px 9px #666666, -5px -5px 9px #ffffff;
+box-shadow: 5px 5px 9px #666666, -5px -5px 9px #ffffff;
 }
 
 body{
-/*	padding-top: 4.9rem;*/
-
+/*	padding-top: 4.9rem; for fixed-top navbar*/
 	background: url("assets/bg.jpg");
 	background-size: cover;
 	background-position: center;
