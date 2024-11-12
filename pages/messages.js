@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import * as Data from '/data/data_manager';
+import * as Config from '/data/app_configurations'
 import {navigate, showNotif} from '/app'
 
 
@@ -35,8 +36,7 @@ export class MessageContainer extends React.Component{
 	};
 	
 	deleteMessage (id, from){
-    	console.log(id)
-    	const element = document.querySelector(`[value='${id}'`).parentElement
+    	const element = document.querySelector(`#${id}`).parentElement
      const modal = new bootstrap.Modal("#delModal",{keybaord:false})
 		   const title = document.querySelector("#deltitle")
 		   const body = document.querySelector("#delbody")
@@ -62,14 +62,16 @@ export class MessageContainer extends React.Component{
 	render(){
 		return (
 			   <div className="card m-3">
-	      <button hidden={this.props.del?false:true} onClick={()=>this.deleteMessage(this.props.id, this.props.sender)} type="button"
-	      className="btn text-danger position-absolute bottom-0 end-0" value={this.props.id}><span className="bi-trash-fill"/></button>
+	      <button id={this.props.id} hidden={this.props.del?false:true} onClick={()=>this.deleteMessage(this.props.id, this.props.sender)} type="button"
+	      className="btn text-bg-danger position-absolute top-0 end-0" style={{
+	        borderRadius:'0px',
+	      	 borderBottomLeftRadius: '5px',
+	      	 borderTopRightRadius:'5px'
+	      }} ><span className="bi-trash-fill"/></button>
 	      
         <div className="card-body">
   <h5 className="card-title"><span className={`bi-${this.props.sender!=""?"person-fill":"question-lg"}`}/> {this.props.sender!=""?this.props.sender:'Anonymous'}</h5>
              <p className="card-text text-secondary">{this.props.message}</p>
-         </div>
-         <div className="card-footer">
          <small> <code className="text-secondary"> <span className={`bi-${this.props.private?"lock-fill":"unlock-fill"} text-${this.props.private?'danger':'secondary'}`}/> {timeAgo(this.props.date)}</code></small>
           </div>
        </div>
@@ -100,9 +102,9 @@ class Messages extends React.Component {
     	let count = 0
         return (
           <div className="container p-1">
-             <div id="home-page" className="p-5 m-0 text-dark text-center bg-light rounded">
-              <h1 className="">{this.props.title}<span className="bi-envelope-open-fill"></span></h1>
-               <p className="">{this.props.text}</p>
+             <div id="home-page" className="p-5 m-0 text-dark text-center fw-light bg-light rounded">
+              <h1 className="fw-light display-4">{this.props.title}<span className="bi-envelope-open-fill"></span></h1>
+               <p className="text-secondary">{this.props.text}</p>
                 </div>
            {this.state.messages.map((item) => {
            const Msgdate = new Date(item.data.date.seconds*1000)
@@ -119,6 +121,6 @@ class Messages extends React.Component {
 
 export default function MessagesPage() {
     return (
-        <Messages title="Messages " text="Messages section, only public messages will appear here" />
+        <Messages title="Public Messages " text="Messages section, only public messages will appear here" />
     );
 }

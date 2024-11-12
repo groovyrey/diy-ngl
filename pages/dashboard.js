@@ -26,9 +26,9 @@ class DashB extends React.Component {
     	let count = 0
         return (
           <div className="container p-1">
-             <div id="home-page" className="p-5 m-0 text-dark border border-primary text-center rounded">
-              <h1 className="">{this.props.title}<span className="bi-database-fill-lock"></span></h1>
-               <p className="">{this.props.text}</p>
+             <div id="home-page" className=" p-5 m-0 text-dark bg-light text-center rounded">
+              <h1 className="fw-light display-4">{this.props.title}<span className="bi-database-fill-lock"></span></h1>
+               <p className="text-secondary fw-light">{this.props.text}</p>
                 </div>
            {this.state.messages.map((item) => {
            const Msgdate = new Date(item.data.date.seconds*1000)

@@ -1,12 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import * as Data from '/data/data_manager';
+import * as Config from '/data/app_configurations'
 import {navigate, showNotif} from '/app'
 
-const max_msg_chars = 3000
-const max_sender_chars = 50
-
-
+const max_msg_chars = Config.inputConfig.max_message_chars
+const max_sender_chars = Config.inputConfig.max_sender_chars
 
 
 class Home extends React.Component {
@@ -23,9 +22,6 @@ class Home extends React.Component {
 		}
 	}
 	//Sender box limitation handler
-	
-	componentDidMount(){}
-	
 	senderChange = (event) =>{
 		if (event.target.value.length >= max_sender_chars) {
 		//	event.target.value = this.state.sender
@@ -89,8 +85,8 @@ class Home extends React.Component {
  	
   return (
    <div className="container p-1">
-   <div className="card">
-   <h5 className="card-header text-bg-primary">Message me</h5>
+   <div className="card fw-light">
+   <h5 className="card-header m-0 text-bg-primary">Message me</h5>
    <div className="card-body">
      <code><small className="text-primary m-0 p-1">{this.state.sl}</small></code>
    <div className="input-group p-1">
