@@ -4,7 +4,7 @@ import * as Data from '/data/data_manager';
 import {navigate, showNotif} from '/app'
 
 const max_msg_chars = 3000
-const max_sender_chars = 100
+const max_sender_chars = 50
 
 
 
