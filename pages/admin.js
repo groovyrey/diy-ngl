@@ -32,6 +32,7 @@ class Pass extends React.Component{
 	componentDidMount() {
 		Data.readCollection("private").then((data)=>{
 			this.setState({password: data[0].data.password})
+			return data[0].data.password
 		}).catch((error)=>{
 			console.error(error)
 		})
