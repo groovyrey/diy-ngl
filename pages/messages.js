@@ -63,15 +63,13 @@ export class MessageContainer extends React.Component{
 		return (
 			   <div className="card m-3">
 	      <button id={this.props.id} hidden={this.props.del?false:true} onClick={()=>this.deleteMessage(this.props.id, this.props.sender)} type="button"
-	      className="btn text-bg-danger position-absolute top-0 end-0" style={{
-	        borderRadius:'0px',
-	      	 borderBottomLeftRadius: '5px',
-	      	 borderTopRightRadius:'5px'
-	      }} ><span className="bi-trash-fill"/></button>
+	      className="btn text-danger position-absolute bottom-0 end-0" ><span className="bi-trash-fill"/></button>
 	      
         <div className="card-body">
   <h5 className="card-title"><span className={`bi-${this.props.sender!=""?"person-fill":"question-lg"}`}/> {this.props.sender!=""?this.props.sender:'Anonymous'}</h5>
              <p className="card-text text-secondary">{this.props.message}</p>
+        </div>
+        <div className="card-footer">
          <small> <code className="text-secondary"> <span className={`bi-${this.props.private?"lock-fill":"unlock-fill"} text-${this.props.private?'danger':'secondary'}`}/> {timeAgo(this.props.date)}</code></small>
           </div>
        </div>
