@@ -89,21 +89,32 @@ class Home extends React.Component {
    <h5 className="card-header m-0 text-bg-primary">Message me</h5>
    <div className="card-body">
      <code><small className="text-primary m-0 p-1">{this.state.sl}</small></code>
-   <div className="input-group p-1">
+   
+<div className="input-group mb-3">
   <span className="input-group-text" id="addon-wrapping"><span className="bi-person-fill"></span></span>
-
- 	<input id="senderIn" onChange={this.senderChange} type="text" className="form-control" placeholder="Sender(Optional)" aria-label="Username" aria-describedby="addon-wrapping"/>
+  <div className="form-floating">
+    <input onChange={this.senderChange} type="text" className="form-control" id="floatingInputGroup1" placeholder="Sender"/>
+    <label >Sender(Optional)</label>
   </div>
+</div>
+  
   <code><small className="text-primary m-0 p-1">{this.state.ml}</small></code>
+  <div className="border card">
   <div className="input-group p-1">
-  <textarea onChange={this.messageChange} placeholder="Message" className="form-control" aria-label="With textarea"></textarea>
+  <div className="form-floating">
+  <textarea onChange={this.messageChange} className="form-control border-0 rounded-0 no-ring" placeholder="Your message here" id="floatingTextarea2"></textarea>
+  <label>Message</label>
 </div>
-<div className="form-check form-switch m-1">
+</div>
+<div className="card-footer">
+<div className="form-check form-switch">
   <input onChange={this.privateChange} className="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked"/>
-  <label className="form-check-label"> Private</label>
+  <label className="m-0 form-check-label">Private</label>
 </div>
-<div className="d-grid p-1">
-  <button onClick={this.buttonClick} type="button" className="m-1 btn btn-primary">Send <span className="bi-send-fill"></span></button>
+</div>
+</div>
+<div className="d-grid mt-2">
+  <button onClick={this.buttonClick} type="button" className="btn btn-primary">Send <span className="bi-send-fill"></span></button>
  </div>
 </div>
    </div>
