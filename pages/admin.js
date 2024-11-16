@@ -4,6 +4,11 @@ import * as Data from '/data/data_manager';
 import {navigate, showNotif} from '/app'
 
 const admin_ips = '124.83.104.174'
+const pass = Data.readCollection("private")
+  .then((data) => data[0].data.password)
+  .catch((error) => {
+    console.error(error);
+  });
 
 class Pass extends React.Component{
 	constructor(props){
@@ -19,23 +24,20 @@ class Pass extends React.Component{
 		this.setState({passInput: event.target.value})
 	}
 	buttonClicked = (event) => {
-		
-		if (this.state.passInput==this.state.password){
+
+pass.then((password) => {
+  if (this.state.passInput==password){
 			//Data.sendMessage('Someone entered admin panel')
 			showNotif('System','Welcome admin!')
 			navigate('dashboard')
 		} else {
 			showNotif('System','Invalid password')
 		}
+});
+		
 	}
 	
 	componentDidMount() {
-		Data.readCollection("private").then((data)=>{
-			this.setState({password: data[0].data.password})
-			return data[0].data.password
-		}).catch((error)=>{
-			console.error(error)
-		})
 	}
 	
 	
