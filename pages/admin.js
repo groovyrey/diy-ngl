@@ -49,7 +49,7 @@ pass.then((password) => {
 			<div className="card-body">
 			<div className="form-floating">
   <input onChange={this.inputChange} type="password" className="form-control" id="floatingPassword" placeholder="Password"/>
-  <label>Password</label>
+  <label htmlFor="floatingPassword" >Password</label>
 </div>
 			</div>
 			<button onClick={this.buttonClicked} type="button" className="btn btn-primary m-3">Submit</button>

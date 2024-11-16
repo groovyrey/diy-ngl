@@ -94,7 +94,7 @@ class Home extends React.Component {
   <span className="input-group-text" id="addon-wrapping"><span className="bi-person-fill"></span></span>
   <div className="form-floating">
     <input onChange={this.senderChange} type="text" className="form-control" id="floatingInputGroup1" placeholder="Sender"/>
-    <label >Sender(Optional)</label>
+    <label htmlFor="floatingInputGroup1" >Sender(Optional)</label>
   </div>
 </div>
   
@@ -103,13 +103,13 @@ class Home extends React.Component {
   <div className="input-group p-1">
   <div className="form-floating">
   <textarea onChange={this.messageChange} className="form-control border-0 rounded-0 no-ring" placeholder="Your message here" id="floatingTextarea2"></textarea>
-  <label>Message</label>
+  <label htmlFor="floatingTextarea2">Message</label>
 </div>
 </div>
 <div className="card-footer">
 <div className="form-check form-switch">
   <input onChange={this.privateChange} className="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked"/>
-  <label className="m-0 form-check-label">Private</label>
+  <label htmlFor="flexSwitchCheckChecked" className="m-0 form-check-label">Private</label>
 </div>
 </div>
 </div>
