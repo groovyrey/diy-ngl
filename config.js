@@ -3,7 +3,7 @@ SystemJS.config({
   defaultExtension: true,
   packages: {
     '.': {
-      main: './public/app.js',
+      main: './app.js',
       defaultExtension: 'js'
     }
   },
