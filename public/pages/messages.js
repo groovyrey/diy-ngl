@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import * as Data from '/data/data_manager';
-import * as Config from '/data/app_configurations'
-import {navigate, showNotif} from '/app'
+import * as Data from '/public/data/data_manager';
+import * as Config from '/public/data/app_configurations'
+import {navigate, showNotif} from '/public/app'
 
 
 function timeAgo(firebaseTimestamp) {

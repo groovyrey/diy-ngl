@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import * as Data from '/data/data_manager';
-import {navigate, showNotif} from '/app'
+import * as Data from '/public/data/data_manager';
+import {navigate, showNotif} from '/public/app'
 
 const admin_ips = '124.83.104.174'
 const pass = Data.readCollection("private")
