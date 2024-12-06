@@ -15,70 +15,59 @@ function timeAgo(firebaseTimestamp) {
     return `${Math.floor(diffInSeconds / 31536000)} year${Math.floor(diffInSeconds / 31536000) !== 1 ? "s" : ""} ago`;
 }
 
-export class MessageContainer extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
-    deleteMessage(id, from) {
-        const element = document.querySelector(`#${id}`).parentElement;
+export const MessageContainer = ({ id, sender, message, private: isPrivate, date, del, onDelete }) => {
+    const deleteMessage = () => {
         const modal = new bootstrap.Modal("#delModal", { keyboard: false });
         const title = document.querySelector("#deltitle");
         const body = document.querySelector("#delbody");
         const delbtn = document.querySelector("#delete");
 
-        if (modal) {
-            title.innerText = "System";
-            body.innerText = `Confirm to delete this message from ${from !== "" ? from : "Anonymous"}?`;
-            modal.show();
-            delbtn.onclick = () => {
-                const check = Data.deleteDocument("maindata", id);
-                modal.hide();
-                if (check) {
-                    showNotif("System", `${id} deleted`);
-                    element.remove();
-                } else {
-                    showNotif("Error", "Failed to delete message");
-                }
-            };
-        }
-    }
+        title.innerText = "System";
+        body.innerText = `Confirm to delete this message from ${sender !== "" ? sender : "Anonymous"}?`;
+        modal.show();
 
-    render() {
-        return (
-            <div className="card m-1 mb-3">
-                <button
-                    id={this.props.id}
-                    hidden={this.props.del ? false : true}
-                    onClick={() => this.deleteMessage(this.props.id, this.props.sender)}
-                    type="button"
-                    className="btn text-danger position-absolute bottom-0 end-0"
-                >
-                    <span className="bi-trash-fill" />
-                </button>
+        delbtn.onclick = async () => {
+            const check = await Data.deleteDocument("maindata", id);
+            modal.hide();
+            if (check) {
+                onDelete(id); // Notify the parent to update the state
+            } else {
+                showNotif("Error", "Failed to delete message");
+            }
+        };
+    };
 
-                <div className="card-body">
-                    <h5 className="card-title">
-                        <span className={`bi-${this.props.sender !== "" ? "person-fill" : "question-lg"}`} />{" "}
-                        {this.props.sender !== "" ? this.props.sender : "Anonymous"}
-                    </h5>
-                    <p className="card-text text-secondary">{this.props.message}</p>
-                </div>
-                <div className="card-footer">
-                    <small>
-                        {" "}
-                        <code className="text-secondary">
-                            {" "}
-                            <span
-                                className={`bi-${this.props.private ? "lock-fill" : "unlock-fill"} text-${
-                                    this.props.private ? "danger" : "secondary"
-                                }`}
-                            />{" "}
-                            {timeAgo(this.props.date)}
-                        </code>
-                    </small>
-                </div>
+    return (
+        <div className="card m-1 mb-3">
+            <button
+                id={id}
+                hidden={!del}
+                onClick={deleteMessage}
+                type="button"
+                className="btn text-danger position-absolute bottom-0 end-0"
+            >
+                <span className="bi-trash-fill" />
+            </button>
+
+            <div className="card-body">
+                <h5 className="card-title">
+                    <span className={`bi-${sender !== "" ? "person-fill" : "question-lg"}`} />{" "}
+                    {sender !== "" ? sender : "Anonymous"}
+                </h5>
+                <p className="card-text text-secondary">{message}</p>
             </div>
-        );
-    }
-}
+            <div className="card-footer">
+                <small>
+                    {" "}
+                    <code className="text-secondary">
+                        {" "}
+                        <span
+                            className={`bi-${isPrivate ? "lock-fill" : "unlock-fill"} text-${isPrivate ? "danger" : "secondary"}`}
+                        />{" "}
+                        {timeAgo(date)}
+                    </code>
+                </small>
+            </div>
+        </div>
+    );
+};

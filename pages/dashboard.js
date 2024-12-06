@@ -3,31 +3,36 @@ import { MessageContainer } from "./container";
 import * as Data from "/data/data_manager";
 
 class DashB extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            messages: [], // Holds all fetched messages
-            currentPage: 1, // Current page for pagination
-            messagesPerPage: 5, // Number of messages per page
-        };
-    }
+	constructor(props) {
+		super(props);
+		this.state = {
+			messages: [], // Holds all fetched messages
+			currentPage: 1, // Current page for pagination
+			messagesPerPage: 5, // Number of messages per page
+		};
+	}
 
-    componentDidMount() {
-        Data.readCollection("maindata")
-            .then((data) => {
-                this.setState({ messages: data }); // Load all messages, including private ones
-            })
-            .catch((error) => {
-                console.error("Error fetching data:", error);
-            });
-    }
+	componentDidMount() {
+		Data.readCollection("maindata")
+			.then((data) => {
+				this.setState({ messages: data });
+			})
+			.catch((error) => console.error("Error fetching data:", error));
+	}
 
-    // Change page
-    changePage = (pageNumber) => {
-        this.setState({ currentPage: pageNumber });
-    };
+	// Handle deletion and update state
+	handleDelete = (id) => {
+		this.setState((prevState) => ({
+			messages: prevState.messages.filter((message) => message.id !== id),
+		}));
+	};
 
-    renderPagination = (totalPages, currentPage) => {
+	// Change page
+	changePage = (pageNumber) => {
+		this.setState({ currentPage: pageNumber });
+	};
+
+	renderPagination = (totalPages, currentPage) => {
         const visiblePages = 3; // Number of pages to show before and after current page
         const pages = [];
 
@@ -109,12 +114,12 @@ class DashB extends React.Component {
 
         return (
             <div className="container p-1">
-                <div id="home-page" className="p-5 m-0 text-dark bg-light text-center rounded">
+                <div id="home-page" className="p-5 m-0 text-dark text-center fw-light bg-light rounded">
                     <h1 className="fw-light display-4">
                         {this.props.title}
-                        <span className="bi-database-fill-lock"></span>
+                        <span className="bi-envelope-open-fill"></span>
                     </h1>
-                    <p className="text-secondary fw-light">{this.props.text}</p>
+                    <p className="text-secondary">{this.props.text}</p>
                 </div>
 
                 {/* Render messages for the current page */}
@@ -127,6 +132,7 @@ class DashB extends React.Component {
                         message={item.data.message}
                         private={item.data.private}
                         date={item.data.date}
+                        onDelete={this.handleDelete}
                     />
                 ))}
 
@@ -136,6 +142,7 @@ class DashB extends React.Component {
         );
     }
 }
+
 
 export default function DashBoard() {
     return <DashB title="All Messages" text="All messages will appear here with delete button" />;
