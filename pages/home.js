@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import * as Data from '/data/data_manager';
 import * as Config from '/data/app_configurations'
 import {navigate, showNotif} from '/app'
@@ -101,10 +100,9 @@ class Home extends React.Component {
   <code><small className="text-primary m-0 p-1">{this.state.ml}</small></code>
   <div className="border card">
   <div className="input-group p-1">
-  <div className="form-floating">
+  
   <textarea onChange={this.messageChange} className="form-control border-0 rounded-0 no-ring" placeholder="Your message here" id="floatingTextarea2"></textarea>
-  <label htmlFor="floatingTextarea2">Message</label>
-</div>
+
 </div>
 <div className="card-footer">
 <div className="form-check form-switch">

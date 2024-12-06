@@ -16,15 +16,13 @@
 }
 
 body{
-/*	padding-top: 4.9rem; for fixed-top navbar*/
+/* margin-top: 4.5rem; */
 	background: url("assets/bg.jpg");
 	background-size: cover;
 	background-position: center;
 	background-repeat: no-repeat;
 	background-attachment: fixed;
 }
-
-
 
 #topbar{
 	z-index: 6;

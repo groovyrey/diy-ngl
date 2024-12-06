@@ -1,49 +1,142 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import * as Data from '/data/data_manager';
-import {MessageContainer} from './messages'
-import {navigate, showNotif} from '/app'
+import React from "react";
+import { MessageContainer } from "./container";
+import * as Data from "/data/data_manager";
 
 class DashB extends React.Component {
-	constructor(props) {
+    constructor(props) {
         super(props);
-        // Initialize state to store fetched data
         this.state = {
-            messages: []// Holds the fetched data
+            messages: [], // Holds all fetched messages
+            currentPage: 1, // Current page for pagination
+            messagesPerPage: 5, // Number of messages per page
         };
     }
-    // Fetch data after component mounts
+
     componentDidMount() {
-        // Call async function and update state
-        Data.readCollection("maindata").then((data) => {
-            this.setState({ messages: data})//.filter(msg=>msg.data.private==true) });
-        }).catch((error) => {
-            console.error("Error fetching data:", error);
-        });
+        Data.readCollection("maindata")
+            .then((data) => {
+                this.setState({ messages: data }); // Load all messages, including private ones
+            })
+            .catch((error) => {
+                console.error("Error fetching data:", error);
+            });
     }
 
-    render() {
-    	let count = 0
+    // Change page
+    changePage = (pageNumber) => {
+        this.setState({ currentPage: pageNumber });
+    };
+
+    renderPagination = (totalPages, currentPage) => {
+        const visiblePages = 3; // Number of pages to show before and after current page
+        const pages = [];
+
+        // Add first page and ellipsis if needed
+        if (currentPage > visiblePages + 1) {
+            pages.push(1, "...");
+        }
+
+        // Add range of pages around the current page
+        for (
+            let i = Math.max(1, currentPage - visiblePages);
+            i <= Math.min(totalPages, currentPage + visiblePages);
+            i++
+        ) {
+            pages.push(i);
+        }
+
+        // Add ellipsis and last page if needed
+        if (currentPage < totalPages - visiblePages) {
+            pages.push("...", totalPages);
+        }
+
         return (
-          <div className="container p-1">
-             <div id="home-page" className=" p-5 m-0 text-dark bg-light text-center rounded">
-              <h1 className="fw-light display-4">{this.props.title}<span className="bi-database-fill-lock"></span></h1>
-               <p className="text-secondary fw-light">{this.props.text}</p>
+            <nav aria-label="Page navigation">
+                <ul className="pagination justify-content-center">
+                    <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
+                        <button
+                            className="page-link"
+                            onClick={() => this.changePage(currentPage - 1)}
+                            disabled={currentPage === 1}
+                        >
+                            Previous
+                        </button>
+                    </li>
+
+                    {pages.map((page, index) =>
+                        page === "..." ? (
+                            <li key={index} className="page-item disabled">
+                                <span className="page-link">{page}</span>
+                            </li>
+                        ) : (
+                            <li
+                                key={index}
+                                className={`page-item ${page === currentPage ? "active" : ""}`}
+                            >
+                                <button
+                                    className="page-link"
+                                    onClick={() => this.changePage(page)}
+                                >
+                                    {page}
+                                </button>
+                            </li>
+                        )
+                    )}
+
+                    <li className={`page-item ${currentPage === totalPages ? "disabled" : ""}`}>
+                        <button
+                            className="page-link"
+                            onClick={() => this.changePage(currentPage + 1)}
+                            disabled={currentPage === totalPages}
+                        >
+                            Next
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        );
+    };
+
+    render() {
+        const { messages, currentPage, messagesPerPage } = this.state;
+
+        // Pagination calculations
+        const totalMessages = messages.length;
+        const totalPages = Math.ceil(totalMessages / messagesPerPage);
+        const indexOfLastMessage = currentPage * messagesPerPage;
+        const indexOfFirstMessage = indexOfLastMessage - messagesPerPage;
+        const currentMessages = messages.slice(indexOfFirstMessage, indexOfLastMessage);
+
+        return (
+            <div className="container p-1">
+                <div id="home-page" className="p-5 m-0 text-dark bg-light text-center rounded">
+                    <h1 className="fw-light display-4">
+                        {this.props.title}
+                        <span className="bi-database-fill-lock"></span>
+                    </h1>
+                    <p className="text-secondary fw-light">{this.props.text}</p>
                 </div>
-           {this.state.messages.map((item) => {
-           const Msgdate = new Date(item.data.date.seconds*1000)
-           const time = Msgdate.getHours()+':'+Msgdate.getMinutes()
-           const format = `${Msgdate.toDateString()} | ${time}`
-          count++
-           return (
-<MessageContainer key={count} del={true} id={item.id} sender={item.data.sender} message={item.data.message} private={item.data.private} date={item.data.date}/>
-               )
-               })}
+
+                {/* Render messages for the current page */}
+                {currentMessages.map((item) => (
+                    <MessageContainer
+                        key={item.id}
+                        del={true}
+                        id={item.id}
+                        sender={item.data.sender}
+                        message={item.data.message}
+                        private={item.data.private}
+                        date={item.data.date}
+                    />
+                ))}
+
+                {/* Render pagination */}
+                {totalPages > 1 && this.renderPagination(totalPages, currentPage)}
             </div>
         );
     }
 }
 
-export default function DashBoard (){
-	return (<DashB title="All messages " text="All messages will appear here with delete button" />)
+export default function DashBoard() {
+    return <DashB title="All Messages" text="All messages will appear here with delete button" />;
 }

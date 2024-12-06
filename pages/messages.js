@@ -1,124 +1,142 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import * as Data from '/data/data_manager';
-import * as Config from '/data/app_configurations'
-import {navigate, showNotif} from '/app'
-
-
-function timeAgo(firebaseTimestamp) {
-	const now = new Date();
-	const timestampDate = firebaseTimestamp.toDate(); // Convert Firebase Timestamp to JS Date
-	const diffInSeconds = Math.floor((now - timestampDate) / 1000);
-
-	if (diffInSeconds < 60) {
-		return `${diffInSeconds} seconds ago`;
-	} else if (diffInSeconds < 3600) {
-		const minutes = Math.floor(diffInSeconds / 60);
-		return `${minutes} minute${minutes !== 1 ? 's' : ''} ago`;
-	} else if (diffInSeconds < 86400) {
-		const hours = Math.floor(diffInSeconds / 3600);
-		return `${hours} hour${hours !== 1 ? 's' : ''} ago`;
-	} else if (diffInSeconds < 2592000) { // Less than 30 days
-		const days = Math.floor(diffInSeconds / 86400);
-		return `${days} day${days !== 1 ? 's' : ''} ago`;
-	} else if (diffInSeconds < 31536000) { // Less than 1 year
-		const months = Math.floor(diffInSeconds / 2592000); // Approximate month as 30 days
-		return `${months} month${months !== 1 ? 's' : ''} ago`;
-	} else {
-		const years = Math.floor(diffInSeconds / 31536000); // Approximate year as 365 days
-		return `${years} year${years !== 1 ? 's' : ''} ago`;
-	}
-}
-
-export class MessageContainer extends React.Component{
-	constructor(props){
-		super(props)
-	};
-	
-	deleteMessage (id, from){
-    	const element = document.querySelector(`#${id}`).parentElement
-     const modal = new bootstrap.Modal("#delModal",{keybaord:false})
-		   const title = document.querySelector("#deltitle")
-		   const body = document.querySelector("#delbody")
-		   const delbtn = document.querySelector("#delete")
-		  
-     if (modal){
-     	title.innerText="System"
-     	body.innerText=`Confirm to delete this message from ${from!=""?from:'Anonymous'}?`
-     	modal.show()
-     	delbtn.onclick=()=>{
-     		const check = Data.deleteDocument("maindata", id)
-     		modal.hide()
-     		if (check) {
-     			showNotif('System', `${id} deleted`)
-     			element.remove()
-     		} else {
-     			showNotif('Error', 'Failed to delete message')
-     		}
-     	}
-     }
-    }
-	
-	render(){
-		return (
-			   <div className="card m-3">
-	      <button id={this.props.id} hidden={this.props.del?false:true} onClick={()=>this.deleteMessage(this.props.id, this.props.sender)} type="button"
-	      className="btn text-danger position-absolute bottom-0 end-0" ><span className="bi-trash-fill"/></button>
-	      
-        <div className="card-body">
-  <h5 className="card-title"><span className={`bi-${this.props.sender!=""?"person-fill":"question-lg"}`}/> {this.props.sender!=""?this.props.sender:'Anonymous'}</h5>
-             <p className="card-text text-secondary">{this.props.message}</p>
-        </div>
-        <div className="card-footer">
-         <small> <code className="text-secondary"> <span className={`bi-${this.props.private?"lock-fill":"unlock-fill"} text-${this.props.private?'danger':'secondary'}`}/> {timeAgo(this.props.date)}</code></small>
-          </div>
-       </div>
-		)
-	}
-}
-
+import React from "react";
+import { MessageContainer } from "./container";
+import * as Data from "/data/data_manager";
 
 class Messages extends React.Component {
     constructor(props) {
         super(props);
-        // Initialize state to store fetched data
         this.state = {
-            messages: [] // Holds the fetched data
+            messages: [], // Holds all fetched messages
+            currentPage: 1, // Current page for pagination
+            messagesPerPage: 5, // Number of messages per page
         };
     }
-    // Fetch data after component mounts
+
     componentDidMount() {
-        // Call async function and update state
-        Data.readCollection("maindata").then((data) => {
-            this.setState({ messages: data.filter(msg=>msg.data.private==false) });
-        }).catch((error) => {
-            console.error("Error fetching data:", error);
-        });
+        Data.readCollection("maindata")
+            .then((data) => {
+                this.setState({ messages: data.filter((msg) => msg.data.private === false) });
+            })
+            .catch((error) => {
+                console.error("Error fetching data:", error);
+            });
     }
 
-    render() {
-    	let count = 0
+    // Change page
+    changePage = (pageNumber) => {
+        this.setState({ currentPage: pageNumber });
+    };
+
+    renderPagination = (totalPages, currentPage) => {
+        const visiblePages = 3; // Number of pages to show before and after current page
+        const pages = [];
+
+        // Add first page and ellipsis if needed
+        if (currentPage > visiblePages + 1) {
+            pages.push(1, "...");
+        }
+
+        // Add range of pages around the current page
+        for (
+            let i = Math.max(1, currentPage - visiblePages);
+            i <= Math.min(totalPages, currentPage + visiblePages);
+            i++
+        ) {
+            pages.push(i);
+        }
+
+        // Add ellipsis and last page if needed
+        if (currentPage < totalPages - visiblePages) {
+            pages.push("...", totalPages);
+        }
+
         return (
-          <div className="container p-1">
-             <div id="home-page" className="p-5 m-0 text-dark text-center fw-light bg-light rounded">
-              <h1 className="fw-light display-4">{this.props.title}<span className="bi-envelope-open-fill"></span></h1>
-               <p className="text-secondary">{this.props.text}</p>
+            <nav aria-label="Page navigation">
+                <ul className="pagination justify-content-center">
+                    <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
+                        <button
+                            className="page-link"
+                            onClick={() => this.changePage(currentPage - 1)}
+                            disabled={currentPage === 1}
+                        >
+                            Previous
+                        </button>
+                    </li>
+
+                    {pages.map((page, index) =>
+                        page === "..." ? (
+                            <li key={index} className="page-item disabled">
+                                <span className="page-link">{page}</span>
+                            </li>
+                        ) : (
+                            <li
+                                key={index}
+                                className={`page-item ${page === currentPage ? "active" : ""}`}
+                            >
+                                <button
+                                    className="page-link"
+                                    onClick={() => this.changePage(page)}
+                                >
+                                    {page}
+                                </button>
+                            </li>
+                        )
+                    )}
+
+                    <li className={`page-item ${currentPage === totalPages ? "disabled" : ""}`}>
+                        <button
+                            className="page-link"
+                            onClick={() => this.changePage(currentPage + 1)}
+                            disabled={currentPage === totalPages}
+                        >
+                            Next
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        );
+    };
+
+    render() {
+        const { messages, currentPage, messagesPerPage } = this.state;
+
+        // Pagination calculations
+        const totalMessages = messages.length;
+        const totalPages = Math.ceil(totalMessages / messagesPerPage);
+        const indexOfLastMessage = currentPage * messagesPerPage;
+        const indexOfFirstMessage = indexOfLastMessage - messagesPerPage;
+        const currentMessages = messages.slice(indexOfFirstMessage, indexOfLastMessage);
+
+        return (
+            <div className="container p-1">
+                <div id="home-page" className="p-5 m-0 text-dark text-center fw-light bg-light rounded">
+                    <h1 className="fw-light display-4">
+                        {this.props.title}
+                        <span className="bi-envelope-open-fill"></span>
+                    </h1>
+                    <p className="text-secondary">{this.props.text}</p>
                 </div>
-           {this.state.messages.map((item) => {
-           const Msgdate = new Date(item.data.date.seconds*1000)
-           const time = Msgdate.getHours()+':'+Msgdate.getMinutes()
-           const format = `${Msgdate.toDateString()} | ${time}`
-           count++
-           return(
-           <MessageContainer key={count} del={false} id={item.id} sender={item.data.sender} message={item.data.message} private={item.data.private} date={item.data.date}/>
-               )})}
+
+                {/* Render messages for the current page */}
+                {currentMessages.map((item) => (
+                    <MessageContainer
+                        key={item.id}
+                        del={false}
+                        id={item.id}
+                        sender={item.data.sender}
+                        message={item.data.message}
+                        private={item.data.private}
+                        date={item.data.date}
+                    />
+                ))}
+
+                {/* Render pagination */}
+                {totalPages > 1 && this.renderPagination(totalPages, currentPage)}
             </div>
         );
     }
 }
 
 export default function MessagesPage() {
-    return (
-        <Messages title="Public Messages " text="Messages section, only public messages will appear here" />
-    );
+    return <Messages title="Public Messages" text="Messages section, only public messages will appear here" />;
 }
