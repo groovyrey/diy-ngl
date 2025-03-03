@@ -44,13 +44,21 @@ pass.then((password) => {
 	render (){
 		return (
 			<div className="container p-1">
-			<div className="card">
-			<h5 className="text-bg-primary card-header">Admin Panel</h5>
+			<div className="card text-light bg-dark">
+			<h5 className="text-bg-dark card-header">Admin Panel</h5>
 			<div className="card-body">
-			<div className="form-floating">
-  <input onChange={this.inputChange} type="password" className="form-control" id="floatingPassword" placeholder="Password"/>
-  <label htmlFor="floatingPassword" >Password</label>
-</div>
+			<label htmlFor="senderInput" className="form-label text-light">Password:</label>
+        <div className="input-group">
+          <span className="input-group-text bg-secondary text-light" id="addon-wrapping">
+            <span className="bi-key-fill"></span>
+          </span>
+          <input
+            onChange={this.inputChange}
+            type="password"
+            className="form-control bg-dark text-light border-secondary"
+            id="senderInput"
+          />
+        </div>
 			</div>
 			<button onClick={this.buttonClicked} type="button" className="btn btn-primary m-3">Submit</button>
 			</div>

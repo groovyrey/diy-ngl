@@ -17,7 +17,7 @@ function timeAgo(firebaseTimestamp) {
 
 export const MessageContainer = ({ id, sender, message, private: isPrivate, date, del, onDelete }) => {
     const deleteMessage = () => {
-        const modal = new bootstrap.Modal("#delModal", { keyboard: false });
+        const modal = new bootstrap.Modal("#delModal", { keyboard: false,backdrop:'static'});
         const title = document.querySelector("#deltitle");
         const body = document.querySelector("#delbody");
         const delbtn = document.querySelector("#delete");
@@ -27,10 +27,13 @@ export const MessageContainer = ({ id, sender, message, private: isPrivate, date
         modal.show();
 
         delbtn.onclick = async () => {
+        	modal.hide()
+        	const lazy = showNotif('Deleting message... ','<div class="d-flex justify-content-center"><div class="spinner-border text-dark" role="status"></div>',null,'static')
             const check = await Data.deleteDocument("maindata", id);
-            modal.hide();
+            const text1 = "Message successfully deleted!"
             if (check) {
-                onDelete(id); // Notify the parent to update the state
+            	showNotif('Message deleted',`<p>${text1}</p><div class="d-flex justify-content-center"><img style="mix-blend-mode:multiply" src="assets/bin.gif" width="100px" height="100px" /></div>`)
+            	onDelete(id) // Notify the parent to update the state
             } else {
                 showNotif("Error", "Failed to delete message");
             }
@@ -38,7 +41,7 @@ export const MessageContainer = ({ id, sender, message, private: isPrivate, date
     };
 
     return (
-        <div className="card m-1 mb-3">
+        <div className="card m-1 mb-3 text-bg-dark">
             <button
                 id={id}
                 hidden={!del}
@@ -50,11 +53,11 @@ export const MessageContainer = ({ id, sender, message, private: isPrivate, date
             </button>
 
             <div className="card-body">
-                <h5 className="card-title">
+                <h5 className="card-title text-info">
                     <span className={`bi-${sender !== "" ? "person-fill" : "question-lg"}`} />{" "}
                     {sender !== "" ? sender : "Anonymous"}
                 </h5>
-                <p className="card-text text-secondary">{message}</p>
+                <p className="card-text text-light">{message}</p>
             </div>
             <div className="card-footer">
                 <small>

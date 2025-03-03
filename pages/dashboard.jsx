@@ -1,33 +1,38 @@
 import React from "react";
-import { MessageContainer } from "./container";
+import { MessageContainer } from "./container.jsx";
 import * as Data from "/data/data_manager";
 
-class Messages extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            messages: [], // Holds all fetched messages
-            currentPage: 1, // Current page for pagination
-            messagesPerPage: 5, // Number of messages per page
-        };
-    }
+class DashB extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			messages: [], // Holds all fetched messages
+			currentPage: 1, // Current page for pagination
+			messagesPerPage: 5, // Number of messages per page
+		};
+	}
 
-    componentDidMount() {
-        Data.readCollection("maindata")
-            .then((data) => {
-                this.setState({ messages: data.filter((msg) => msg.data.private === false) });
-            })
-            .catch((error) => {
-                console.error("Error fetching data:", error);
-            });
-    }
+	componentDidMount() {
+		Data.readCollection("maindata")
+			.then((data) => {
+				this.setState({ messages: data });
+			})
+			.catch((error) => console.error("Error fetching data:", error));
+	}
 
-    // Change page
-    changePage = (pageNumber) => {
-        this.setState({ currentPage: pageNumber });
-    };
+	// Handle deletion and update state
+	handleDelete = (id) => {
+		this.setState((prevState) => ({
+			messages: prevState.messages.filter((message) => message.id !== id),
+		}));
+	};
 
-    renderPagination = (totalPages, currentPage) => {
+	// Change page
+	changePage = (pageNumber) => {
+		this.setState({ currentPage: pageNumber });
+	};
+
+	renderPagination = (totalPages, currentPage) => {
         const visiblePages = 3; // Number of pages to show before and after current page
         const pages = [];
 
@@ -121,12 +126,13 @@ class Messages extends React.Component {
                 {currentMessages.map((item) => (
                     <MessageContainer
                         key={item.id}
-                        del={false}
+                        del={true}
                         id={item.id}
                         sender={item.data.sender}
                         message={item.data.message}
                         private={item.data.private}
                         date={item.data.date}
+                        onDelete={this.handleDelete}
                     />
                 ))}
 
@@ -137,6 +143,7 @@ class Messages extends React.Component {
     }
 }
 
-export default function MessagesPage() {
-    return <Messages title="Public Messages" text="Messages section, only public messages will appear here" />;
+
+export default function DashBoard() {
+    return <DashB title="All Messages" text="All messages will appear here with delete button" />;
 }

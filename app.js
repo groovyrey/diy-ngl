@@ -1,13 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import * as Data from './data/data_manager'
-import HomePage from './pages/home'
-import MessagesPage from './pages/messages'
-import AdminPage from './pages/admin'
-import DashBoard from './pages/dashboard'
+import HomePage from './pages/home.jsx'
+import MessagesPage from './pages/messages.jsx'
+import AdminPage from './pages/admin.jsx'
+import DashBoard from './pages/dashboard.jsx'
 
 const app = document.getElementById('app')
 const preloader = document.getElementById('loader')
+const notifElement = document.getElementById('Modal')
+const notifModal = new bootstrap.Modal(notifElement, {
+	keyboard: true,
+	backdrop: true
+})
+
 
 const routes = {
 	'home': HomePage(),
@@ -18,15 +24,18 @@ const routes = {
 
 navigate()
 
-export function showNotif (title, body){
-	const titleText = document.getElementById('modal-title')
-	const bodyText = document.getElementById('modal-body')
-	const modal = new bootstrap.Modal("#Modal",{
-		keyboard: true
-	})
-	titleText.innerText = title
-	bodyText.innerText = body
-	modal.show()
+export function showNotif (title,body,key=true,type=true){
+
+  
+const titleText = notifElement.querySelector('.modal-title')
+const bodyText = notifElement.querySelector('.modal-body')
+notifModal._config.key = key;
+notifModal._config.backdrop = type
+titleText.innerHTML= title  
+bodyText.innerHTML = body  
+notifModal.show() 
+  
+return notifModal
 }
 
 export function navigate (route){

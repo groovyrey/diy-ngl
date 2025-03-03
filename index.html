@@ -14,7 +14,7 @@
 </head>
 
 <body>
-  <nav id="topbar" class="navbar bg-light navbar-expand-sm navbar-light">
+  <nav id="topbar" class="navbar bg-dark navbar-expand-sm navbar-dark">
   <div class="container-fluid">
     <a class="navbar-brand" data-bs-toggle="offcanvas" data-bs-target="#sidebar">
      <img id="logo" src="/assets/mail.png" alt="logo">
@@ -25,7 +25,7 @@
     <div class="collapse navbar-collapse" id="collapsibleNavbar">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link active" style="cursor:pointer" data-route="home"><span class="bi-send-fill"></span> Send</a>
+          <a class="nav-link" style="cursor:pointer" data-route="home"><span class="bi-send-fill"></span> Send</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" data-route="messages"><span class="bi-chat-square-text-fill"></span> Messages</a>
@@ -50,7 +50,7 @@
 <!-- Modal for notif -->
 <div class="modal fade" tabindex="-1" id="Modal" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
+    <div class="modal-content text-bg-dark">
       <div class="modal-header">
         <h5 class="modal-title fs-5" id="modal-title">Modal title</h5>
       </div>
@@ -64,7 +64,7 @@
 <!-- Modal for delete -->
 <div class="modal fade" id="delModal" tabindex="-1" aria-labelledby="exampleModalLabel" data-bs-backdrop="static" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
+    <div class="modal-content text-bg-dark">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="deltitle">Confirm to delete this message?</h1>
       </div>

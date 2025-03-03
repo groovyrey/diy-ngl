@@ -10,10 +10,30 @@
 	padding: 5px;
 }
 
-.nav-link > span{
-	background-color: transparent;
+/*.nav-link > span{
+	background-color: black;
+	border-radius: 2px;
 	padding: 5px;
+}*/
+
+.navbar-nav .nav-item .nav-link.active {
+    background: url('assets/active.gif') !important;  /* Custom background */
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    color: black !important;              /* Custom text color */
+    border-radius: 5px;  
+    /* Rounded corners */
+    border: 2px solid white;
+    font-weight: bold;
 }
+
+
+/*.nav-item{
+	background: #42445A;
+	margin: 2px;
+	border-radius: 3px;
+}*/
 
 body{
 /* margin-top: 4.5rem; */

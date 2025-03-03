@@ -12,7 +12,12 @@ SystemJS.config({
       'babelOptions': {
         react: true
       }
-    }
+    },
+    '*.jsx': {
+    	'babelOptions': {
+    		react: true
+    	}
+    },
   },
   map: {
     'plugin-babel': 'systemjs-plugin-babel@latest/plugin-babel.js',
