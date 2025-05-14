@@ -128,14 +128,14 @@ class Home extends React.Component {
         </div>
         <div className="card-footer bg-dark">
           <div className="form-check form-switch">
+          	<label htmlFor="flexSwitchCheckChecked" className="m-0 form-check-label text-light">Private</label>
             <input
               onChange={this.privateChange}
-              className="form-check-input bg-secondary border-light"
+              className="form-check-input border-black"
               type="checkbox"
               role="switch"
               id="flexSwitchCheckChecked"
             />
-            <label htmlFor="flexSwitchCheckChecked" className="m-0 form-check-label text-light">Private</label>
           </div>
         </div>
       </div>
